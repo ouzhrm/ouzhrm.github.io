@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ouzhrm.github.io/"/>
-  <updated>2018-04-12T07:01:52.573Z</updated>
+  <updated>2018-04-18T01:30:29.632Z</updated>
   <id>https://ouzhrm.github.io/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://ouzhrm.github.io/2018/04/12/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
     <id>https://ouzhrm.github.io/2018/04/12/我的第一篇博客/</id>
     <published>2018-04-12T06:39:32.000Z</published>
-    <updated>2018-04-12T07:01:52.573Z</updated>
+    <updated>2018-04-18T01:30:29.632Z</updated>
     
-    <content type="html"><![CDATA[<p>接触博客已经3、4年了，但是一直没有搭建过自己的一个独立的博客，曾经在github上，csdn上写过，<br>那是大二的时候了。今天浏览github的时候无意之中看见了搭建博客的教程，心里突然想到的是，<br>一味的索取他人的知识，没有奉献过自己的知识，顿时感觉到是不是有点自私了？于是乎，经过三天<br>的摸索，终于搭建了一个自己的小博客，写这篇博客的目的是，希望勉励自己，为互联网奉献自己的<br>一份微薄之力。</p>]]></content>
+    <content type="html"><![CDATA[<p>接触博客已经3、4年了，但是一直没有搭建过自己的一个独立的博客，曾经在github上，csdn上写过，<br>那是大二的时候了。今天浏览github的时候无意之中看见了搭建博客的教程，心里突然想到的是，<br>一味的索取他人的知识，没有奉献过自己的知识，顿时感觉到是不是有点自私了？于是乎，经过三天<br>的摸索，终于搭建了一个自己的小博客，写这篇博客的目的是，希望勉励自己，不断前行，尽可能的<br>为互联网奉献自己的一份微薄之力。</p>]]></content>
     
     <summary type="html">
     
@@ -36,6 +36,8 @@
     
       <category term="随笔" scheme="https://ouzhrm.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
     
+    
+      <category term="随笔" scheme="https://ouzhrm.github.io/tags/%E9%9A%8F%E7%AC%94/"/>
     
   </entry>
   
