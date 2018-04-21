@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
-  <title>Kevin Chow&#39;s blog</title>
+  <title>mysql常用配置参数 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="坐最冷的板凳，得最难治的脊椎病。">
-<meta name="keywords" content="java;后台;直播">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Kevin Chow&#39;s blog">
-<meta property="og:url" content="https://ouzhrm.github.io/index.html">
+  <meta name="description" content="mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这个文件，设置相关的运行环境参数。查询当前全部参数设置sql语句为：show variables 下面是一些常用的配置参数：port=3306mysql使用的端口号 atadir=/data/mysql数据文档存储目录,默认为/var/lib/mysql skip-slave-start">
+<meta name="keywords" content="数据库,mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql常用配置参数">
+<meta property="og:url" content="https://ouzhrm.github.io/2018/04/19/mysql常用配置参数/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="坐最冷的板凳，得最难治的脊椎病。">
+<meta property="og:description" content="mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这个文件，设置相关的运行环境参数。查询当前全部参数设置sql语句为：show variables 下面是一些常用的配置参数：port=3306mysql使用的端口号 atadir=/data/mysql数据文档存储目录,默认为/var/lib/mysql skip-slave-start">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-21T01:37:34.303Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kevin Chow&#39;s blog">
-<meta name="twitter:description" content="坐最冷的板凳，得最难治的脊椎病。">
+<meta name="twitter:title" content="mysql常用配置参数">
+<meta name="twitter:description" content="mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这个文件，设置相关的运行环境参数。查询当前全部参数设置sql语句为：show variables 下面是一些常用的配置参数：port=3306mysql使用的端口号 atadir=/data/mysql数据文档存储目录,默认为/var/lib/mysql skip-slave-start">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -146,93 +147,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-高并发环境下mysql的调优" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-mysql常用配置参数" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/21/高并发环境下mysql的调优/">高并发环境下mysql的调优</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/21/高并发环境下mysql的调优/" class="archive-article-date">
-  	<time datetime="2018-04-21T04:04:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-		 
-		
-		
-		  <p><strong>skip-locking</strong><br>避免MySQL的外部锁定，减少出错几率增强稳定性。  </p>
-		  
-		
-	  
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/21/高并发环境下mysql的调优/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-mysql常用配置参数" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/19/mysql常用配置参数/">mysql常用配置参数</a>
+    <h1 class="article-title" itemprop="name">
+      mysql常用配置参数
     </h1>
   
 
@@ -248,10 +170,88 @@
 		
 		
 		  <p>mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这<br>个文件，设置相关的运行环境参数。<br>查询当前全部参数设置sql语句为：show variables</p>
-		  
+<p>下面是一些常用的配置参数：<br><strong>port=3306</strong><br>mysql使用的端口号</p>
+<p><strong>atadir=/data/mysql</strong><br>数据文档存储目录,默认为/var/lib/mysql</p>
+<p><strong>skip-slave-start</strong><br>禁止slave复制进程随Mysql数据库启动而启动，默认为未启用</p>
+<p><strong>skip-name-resolve</strong><br>禁止Mysql进行DNS反向解析,默认为未启用,安装的MySql开启了DNS的反向解析,<br>禁止DNS反向解析后,只能通过Mysql授权表中IP来访问,可以提高Mysql访问速度.</p>
+<p><strong>sort_buffer_size = 4M</strong><br>connection级参数，一个连接分配多少内存，默认为256KB。</p>
+<p><strong>join_buffer_size = 2M</strong><br>默认为128KB，用于表间关联缓存的大小，和sort_buffer_size一样，该参数对应的分配内存也是每<br>个连接独享。如果应用中，很少出现join语句，则可以不用太在乎join_buffer_size参数的设置大小。<br>如果join语句不是很少的话，个人建议可以适当增大join_buffer_size到1MB左右，如果内存充足可以<br>设置为2MB</p>
+<p><strong>table_open_cache = 5000</strong><br>打开表的缓存数量，默认为64。也不是定义内存的大小的。而是定义可以缓存多少打开的表的文件<br>句柄信息。如果定义的太小，那么mysql在需要打开新表的时候就要不断的关闭已经打开的表和打开<br>此次需要打开的表。性能会受到影响。</p>
+<p><strong>table_definition_cache = 5000</strong><br>默认值为256 (Myslq5.12后，之前128)，表定义信息缓存是从MySQL5.1.3 版本才开始引入的一个<br>新的缓存区，用来存放表定义信息，设置好的话能提高对表定义信息的访问效率。</p>
+<p><strong>thread_cache_size = 512</strong><br>定义缓存了的线程数量<br>只要设置的大小除以8小于物理内存就可以的。</p>
+<p><strong>query_cache_size = 32M</strong><br>用来缓存特定Query 的结果集（Result Set）信息，默认值为0。在数据库写入量或是更新量也比较<br>大的系统，该参数不适合分配过大。而且在高并发，写入量大的系统，建议把该功能禁掉。</p>
+<p><strong>query_cache_limit = 2M</strong><br>默认值为1MB<br>指定单个查询能够使用的缓冲区大小</p>
+<p><strong>max_allowed_packet = 100M</strong><br>默认值为4M。<br>接受的数据包大小</p>
+<p><strong>max_connect_errors = 1000000</strong><br>默认值为10<br>一个MySQL中与安全有关的计数器值，它负责阻止过多尝试失败的客户端以防止暴力破解密码的<br>情况。max_connect_errors的值与性能并无太大关系，mysqladmin flush-hosts命令来解锁已经<br>被屏蔽的主机</p>
+<p><strong>max_connections = 1500</strong><br>默认值为100<br>MySQL允许最大的进程连接数，如果经常出现Too Many Connections的错误提示，则需要增大此值。</p>
+<p><strong>tmp_table_size = 256M</strong><br>默认值大小为32M<br>临时表使用内存<br>如果一张临时表超出该大小，MySQL产生一个 The table tbl_name is full 形式的错误，如果你<br>做很多高级 GROUP BY 查询，增加 tmp_table_size 值。如果超过该值，则会将临时表写入磁盘。</p>
+<p><strong>max_heap_table_size = 256M</strong><br>定义了用户可以创建的内存表(memory table)的大小。这个值用来计算内存表的最大行数值。这个<br>变量支持动态改变其大小还小于 tmp_table_size 的时候，MySQL 将使用 max_heap_table_size<br>参数所设置大小作为最大的内存临时表大小，而忽略 tmp_table_size 所设置的值。</p>
+<h4 id="——–log———"><a href="#——–log———" class="headerlink" title="——–log———"></a>——–log———</h4><p><strong>slow_query_log=1</strong><br>slow quere log的开关，当值为1的时候说明开启慢查询。</p>
+<p><strong>slow_query_log_file=slow.log</strong><br>慢查询日志位置及其文件名字</p>
+<p><strong>long_query_time = 1</strong><br>慢查询时间 超过1秒则为慢查询</p>
+<p><strong>log-error = mysql-error.log</strong><br>Mysql错误日志开关<br>错误日志位置及错误日志文件名</p>
+<p><strong>log_slave_updates = 1</strong><br>默认为0(关闭状态)<br>控制从库通过I0线程读取主库二进制日志文件，<br>然后通过SQL线程写入的数据时候是否写入从库自身的binlog日志</p>
+<p><strong>relay_log_purge = 0</strong><br>默认为1(自动删除状态)<br>控制SQL线程在执行完一个relay log后是否自动将其删除</p>
+<p><strong>read_only = 1</strong><br>默认为0 (读写状态)<br>设置数据库为只读模式，只对普通用户起作用。对root或拥有super权限的无效果。</p>
+<h4 id="——–binlog———"><a href="#——–binlog———" class="headerlink" title="——–binlog———"></a>——–binlog———</h4><p><strong>expire_logs_days = 30</strong><br>默认为0 (不自动删除)<br>设置binlog自动删除过期时间</p>
+<p><strong>log-bin=mysql-bin</strong><br>默认为关闭<br>Mysql的binlog日志开关<br>设置binlog日志位置及日志文件名</p>
+<p><strong>binlog_format=mixed</strong><br>默认为statement<br>binlog日志格式，建议使用mixed</p>
+<p><strong>server-id = 1055</strong><br>Mysql server唯一标示，一般以时间戳就可以<br>主从同步中使用<br>mysql的同步的数据中是包含server-id的，用于标识该语句最初是从哪个server写入的。</p>
+<h4 id="——–innodb———"><a href="#——–innodb———" class="headerlink" title="——–innodb———"></a>——–innodb———</h4><p><strong>innodb_data_home_dir = /data/mysql/ibdata</strong><br>默认使用MySQL的 datadir 目录为缺省目录<br>InnoDB表的目录共用设置<br>如果设定一个空字串,可以在 innodb_data_file_path 中设定绝对路径</p>
+<p><strong>innodb_file_per_table = 1</strong><br>默认为关闭(值为0)<br>控制是否使用独立表空间模式</p>
+<p><strong>innodb_autoextend_increment = 256</strong><br>默认是8M<br>当自动扩展表空间被填满之时，为扩展而增加的尺寸（MB为单位）<br>mysql 5.6.5版本之前默认值是8Mb，从5.6.6版本之后默认为64Mb，最小值为1Mb，最大值为1000Mb。<br>这个参数受到innodb_file_per_table参数的影响</p>
+<p><strong>innodb_data_file_path=ibdata1:10M;ibdata2:10M:autoexte</strong><br>指定表数据和索引存储的空间，可以是一个或者多个文件。最后一个数据文件必须是自动扩充的，也<br>只有最后一个文件允许自动扩充。<br>例子：<br>假设希望创建一个数据文件ibdata1，初始大小为100MB，并希望在每次达到当前大小限制时，自动增加<br>8MB（8MB是指定autoextend时的默认扩展大小).但是，不希望此文件超过1GB，可以使用如下配置:<br>innodb_data_home_dir =<br>innodb_data_file_path = /data/ ibdata1:100M:autoextend:8M: max:1GB<br>如果此文件增加到预定的1G的限制，可以再增加另外一个数据文件,如下:<br>innodb_data_file_path = /data/ibdata1:100M:autoextend:8M: max:1GB;<br>innodb_data_file_path = /data2/ibdata2:100M:autoextend:8M: max:2GB</p>
+<p><strong>innodb_table_locks = 0</strong><br>默认值为1<br>如果autocommit=1,Innodb的内部表锁可能会导致deadlock,可以通过设置innodb_table_locks=0来解决这<br>个问题，设置innodb_lock_wait_timeout变量,使deadlock超时后rollback</p>
+<p><strong>innodb_lock_wait_timeout = 10</strong><br>MySQL在允许其他事务修改那些最终受事务回滚的数据之前要等待多长时间(秒数)</p>
+<p><strong>innodb_buffer_pool_size = 16G</strong><br>默认为8M<br>InnoDB 用来高速缓冲数据和索引内存缓冲大小<br>可以设置60-80%的内存</p>
+<p><strong>innodb_additional_mem_pool_size = 20M</strong><br>默认值为1MB<br>InnoDB 用来存储数据字典(data dictionary)信息和其它内部数据结构(internal data structures)的存<br>储器组合(memory pool)大小参数对系统整体性能并无太大的影响，只要能存放需要的数据就好，否则只会<br>浪费内存几百个Innodb 表的，推荐20M以内就足以了。<br>此参数在5.7中已经移除</p>
+<p><strong>innodb_read_io_threads = 6</strong><br>后台读线程, 主要处理INNODB 数据文件异步读请求<br>每个read线程最多可以pend 256个任务(Linux平台中)</p>
+<p><strong>innodb_write_io_threads = 6</strong><br>后台写线程数, 主要处理INNODB 数据文件异步写请求<br>每个write线程最多可以pend 256个任务(Linux平台中)</p>
+<p><strong>innodb_flush_method=O_DIRECT</strong><br>默认为fdatasync<br>fdatasync：调用fsync()去刷数据文件与redo log的buffer<br>O_DSYNC：innodb会使用O_SYNC方式打开和刷写redo log,使用fsync()刷写数据文件<br>O_DIRECT：innodb使用O_DIRECT打开数据文件，使用fsync()刷写数据文件跟redo log</p>
+<p><strong>innodb_log_files_in_group = 2</strong><br>默认为2<br>控制日志文件数</p>
+<p><strong>innodb_log_file_size = 1G</strong><br>默认为 5M<br>用来在mysql crash后的恢复.所以设置合理的大小对于mysql的性能非常重要<br>通过show engine innodb status;可以查看mysql checkpoint情况，可以算<br>出上次checkpoint和最后一次checkpoint的中间值，官方文档建议最好不要超过<br>innodb_log_files_in_group*innodb_log_file_size的0.75<br>由此可以推算出innodb_log_file_size比较合适的值。<br>在mysql 5.5和5.5以前innodb的logfile最大设置为4GB,在5.6以后的版本中logfile<br>最大的可以设为512GB<br>当mysql crash后，在重启之前需要将老的innodb logfile删除。</p>
+<p><strong>innodb_log_buffer_size = 48M</strong><br>默认为8M<br>当事务提交时，保存脏数据到内存中，后续再刷新保存到磁盘<br>适当调整此参数大小，可以减少磁盘I/O</p>
+<p><strong>innodb_flush_log_at_trx_commit=2</strong><br>默认为1<br>控制log buffer写入log file和控制flush操作<br>innodb_flush_log_at_trx_commit=0，log buffer将每秒一次地写入log file中，<br>并且log file的flush(刷到磁盘)操作同时进行.该模式下，在事务提交的时候，不<br>会主动触发写入磁盘的操作。<br>innodb_flush_log_at_trx_commit=1，每次事务提交时MySQL都会把log buffer的<br>数据写入log file，并且flush(刷到磁盘)中去.<br>innodb_flush_log_at_trx_commit=2，每次事务提交时MySQL都会把log buffer的<br>数据写入log file.但是flush(刷到磁盘)操作并不会同时进行。该模式下,MySQL会<br>每秒执行一次 flush(刷到磁盘)操作。<br>注意：<br>  由于进程调度策略问题,这个“每秒执行一次 flush(刷到磁盘)操作”并不是保证<br>  100%的“每秒”。</p>
+<p><strong>sync_binlog = 15</strong><br>默认值为0<br>像操作系统刷其他文件的机制一样，MySQL不会同步到磁盘中去而是依赖操作系统<br>来刷新binary log。当sync_binlog =N (N&gt;0) ，MySQL 在每写 N次 二进制日志<br>binary log时，会使用fdatasync()函数将它的写二进制日志binary log同步<br>到磁盘中去。<br>注:<br>   如果启用了autocommit，那么每一个语句statement就会有一次写操作；否则<br>   每个事务对应一个写操作。<br>   一般与innodb_flush_log_at_trx_commit同时设置</p>
+<p><strong>innodb_support_xa = 0</strong><br>0表示关闭<br>分布式事务中此参数确保事务日志写入bin-log 的顺序与是事务的time-line 是<br>一致的</p>
+<p><strong>sql_mode = NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES</strong><br>默认为空<br>此参数在mysql数据库版本升级时候用比较合适</p>
+<p><strong>binlog_cache_size=2M</strong><br>默认为32K<br>一个事务，在没有提交（uncommitted）的时候，产生的日志，记录到Cache中；<br>等到事务提交（committed）需要提交的时候，则把日志持久化到磁盘<br>在事务中存储二进制日志sql语句的缓存大小</p>
+<p><strong>tx_isolation = READ-COMMITTED</strong><br>默认为 REPEATABLE READ<br>关于MySQL的事务处理及隔离级别<br>READ-UNCOMMITTED, READ-COMMITTED, REPEATABLE-READ, SERIALIZABLE</p>
+
 		
 	  
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>坚持原创技术分享，您的支持将鼓励我继续创作！<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/images/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/images/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -275,16 +275,84 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/19/mysql常用配置参数/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2018/04/19/mysql常用配置参数/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/04/21/高并发环境下mysql的调优/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          高并发环境下mysql的调优
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/19/数据库事务的四种隔离级别/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据库事务的四种隔离级别</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -304,261 +372,14 @@
 
 
 
-
   
-    <article id="post-数据库事务的四种隔离级别" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/19/数据库事务的四种隔离级别/">数据库事务的四种隔离级别</a>
-    </h1>
   
 
-        
-        <a href="/2018/04/19/数据库事务的四种隔离级别/" class="archive-article-date">
-  	<time datetime="2018-04-19T02:24:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-		 
-		
-		
-		  <p>1.读没提交<br>事务A没有提交，做了一些写入或者更新操作，事务B可以读，但如果事务B发生回滚，那么就会出现脏读现象。<br>脏读可以理解成还没提交你就开始读，真脏的意思。实际做生产的时候一般不会使用这种事务。<br>2.读提交<br>和读没提交恰好相反，只有事务A提交了，事务B才可以读，大部分数据库支持这一种事务。<br>3.重复读<br>事务B先读一遍数据，事务A写入id为3的数据，事务B再查一遍数据，发现没有发生变化，也就是说事务之间隔离了，<br>但事务B也想写入id为3的数据时，发现无法写入，并提醒id重复,也就是所谓的幻读，似乎发生幻觉了一样。这种<br>隔离级别是事务各干各的，但是又有点联系那种，很模糊。mysql就是默认这种隔离级别的。<br>4.串行化<br>事务A正在查询，事务B写入，会发现事务B无法写入，显示正在等待状态。这是事务隔离级别中最严格的。</p>
-		  
-		
-	  
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/19/数据库事务的四种隔离级别/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-《大型网站技术架构-核心原理与案例分析》读书总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/18/《大型网站技术架构-核心原理与案例分析》读书总结/">《大型网站技术架构 核心原理与案例分析》读书总结</a>
-    </h1>
   
 
-        
-        <a href="/2018/04/18/《大型网站技术架构-核心原理与案例分析》读书总结/" class="archive-article-date">
-  	<time datetime="2018-04-18T02:21:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-		 
-		
-		
-		  <h4 id="我为什么读这本书？"><a href="#我为什么读这本书？" class="headerlink" title="我为什么读这本书？"></a>我为什么读这本书？</h4><p>最近在研究分布式相关，在网上聊的热火朝天，都说这本书入门好。李智慧编写，电子工业出版社出版，<br>豆瓣读书评分是7.9,一共有1000多人参与评论。我大概花了一个多星期的零碎时间，通读了这本书，大<br>概读到后面的后辈对晚辈的悉心嘱咐的时候，我就在豆瓣读书奉献了这本书的书评，给了三星。并作了<br>一些评论。毫无疑问，这本书真的是很适合入门，网上的兄弟们没骗我，它会在大型网站架构上给你一<br>些很全面的认识以及自己的一些经验之谈。但咋们做技术的，往往注重实用性，关注点在能不能用，怎<br>么用，用的时候注意什么，用的好不好等问题，但在这本书并没有深入。而最后，我想总结的是，这本<br>书更像一本兵书，想发力却又用不上来的那种感觉，又像师父领进门，修行看个人的感觉。如果说非要<br>给这本书来个标签，那可能是，有点失灵，但方向还基本正确的指南针，因为里面多少掺杂一些水分，<br>无关紧要的，能一句话说完，它非要说上1000来字，带点装*，自嗨的那种感觉。    </p>
-		  
-		
-	  
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">分布式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/读书//" class="article-tag-list-link color3">读书</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/18/《大型网站技术架构-核心原理与案例分析》读书总结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-我的第一篇博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/12/我的第一篇博客/">我的第一篇博客</a>
-    </h1>
   
 
-        
-        <a href="/2018/04/12/我的第一篇博客/" class="archive-article-date">
-  	<time datetime="2018-04-12T06:39:32.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-		 
-		
-		
-		  <p>接触博客已经3、4年了，但是一直没有搭建过自己的一个独立的博客，曾经在github上，csdn上写过，<br>最高的那篇文章浏览量也已经过万，那是大二的时候了。今天浏览github的时候无意之中看见了搭建<br>博客的教程，心里突然想到的是，一味的索取他人的知识，没有奉献过自己的知识，顿时感觉到是不是<br>有点自私了？于是乎，经过三天的摸索，终于搭建了一个自己的小博客，写这篇博客的目的是，希望勉<br>励自己，不断前行，尽可能的为互联网事业奉献自己的一份微薄之力。</p>
-		  
-		
-	  
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/随笔//" class="article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/12/我的第一篇博客/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
   
 
 
@@ -581,8 +402,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
