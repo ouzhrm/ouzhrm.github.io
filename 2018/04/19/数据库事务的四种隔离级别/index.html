@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
   <title>数据库事务的四种隔离级别 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1.读没提交事务A没有提交，做了一些写入或者更新操作，事务B可以读，但如果事务B发生回滚，那么就会出现脏读现象。脏读可以理解成还没提交你就开始读，真脏的意思。实际做生产的时候一般不会使用这种事务。2.读提交和读没提交恰好相反，只有事务A提交了，事务B才可以读，大部分数据库支持这一种事务。3.重复读事务B先读一遍数据，事务A写入id为3的数据，事务B再查一遍数据，发现没有发生变化，也就是说事务之间隔">
+  <meta name="description" content="1.读没提交事务A没有提交，做了一些写入或者更新操作，事务B可以读，但如果事务B发生回滚，那么就会出现脏读现象。">
 <meta name="keywords" content="数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库事务的四种隔离级别">
 <meta property="og:url" content="https://ouzhrm.github.io/2018/04/19/数据库事务的四种隔离级别/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="1.读没提交事务A没有提交，做了一些写入或者更新操作，事务B可以读，但如果事务B发生回滚，那么就会出现脏读现象。脏读可以理解成还没提交你就开始读，真脏的意思。实际做生产的时候一般不会使用这种事务。2.读提交和读没提交恰好相反，只有事务A提交了，事务B才可以读，大部分数据库支持这一种事务。3.重复读事务B先读一遍数据，事务A写入id为3的数据，事务B再查一遍数据，发现没有发生变化，也就是说事务之间隔">
+<meta property="og:description" content="1.读没提交事务A没有提交，做了一些写入或者更新操作，事务B可以读，但如果事务B发生回滚，那么就会出现脏读现象。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-21T01:37:33.477Z">
+<meta property="og:updated_time" content="2018-04-22T08:33:14.043Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库事务的四种隔离级别">
-<meta name="twitter:description" content="1.读没提交事务A没有提交，做了一些写入或者更新操作，事务B可以读，但如果事务B发生回滚，那么就会出现脏读现象。脏读可以理解成还没提交你就开始读，真脏的意思。实际做生产的时候一般不会使用这种事务。2.读提交和读没提交恰好相反，只有事务A提交了，事务B才可以读，大部分数据库支持这一种事务。3.重复读事务B先读一遍数据，事务A写入id为3的数据，事务B再查一遍数据，发现没有发生变化，也就是说事务之间隔">
+<meta name="twitter:description" content="1.读没提交事务A没有提交，做了一些写入或者更新操作，事务B可以读，但如果事务B发生回滚，那么就会出现脏读现象。">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -169,7 +169,7 @@
 		 
 		
 		
-		  <p>1.读没提交<br>事务A没有提交，做了一些写入或者更新操作，事务B可以读，但如果事务B发生回滚，那么就会出现脏读现象。<br>脏读可以理解成还没提交你就开始读，真脏的意思。实际做生产的时候一般不会使用这种事务。<br>2.读提交<br>和读没提交恰好相反，只有事务A提交了，事务B才可以读，大部分数据库支持这一种事务。<br>3.重复读<br>事务B先读一遍数据，事务A写入id为3的数据，事务B再查一遍数据，发现没有发生变化，也就是说事务之间隔离了，<br>但事务B也想写入id为3的数据时，发现无法写入，并提醒id重复,也就是所谓的幻读，似乎发生幻觉了一样。这种<br>隔离级别是事务各干各的，但是又有点联系那种，很模糊。mysql就是默认这种隔离级别的。<br>4.串行化<br>事务A正在查询，事务B写入，会发现事务B无法写入，显示正在等待状态。这是事务隔离级别中最严格的。</p>
+		  <p>1.读没提交<br>事务A没有提交，做了一些写入或者更新操作，事务B可以读，但如果事务B发生回滚，那么就会出现脏读现象。<br><a id="more"></a><br>脏读可以理解成还没提交你就开始读，真脏的意思。实际做生产的时候一般不会使用这种事务。<br>2.读提交<br>和读没提交恰好相反，只有事务A提交了，事务B才可以读，大部分数据库支持这一种事务。<br>3.重复读<br>事务B先读一遍数据，事务A写入id为3的数据，事务B再查一遍数据，发现没有发生变化，也就是说事务之间隔离了，<br>但事务B也想写入id为3的数据时，发现无法写入，并提醒id重复,也就是所谓的幻读，似乎发生幻觉了一样。这种<br>隔离级别是事务各干各的，但是又有点联系那种，很模糊。mysql就是默认这种隔离级别的。<br>4.串行化<br>事务A正在查询，事务B写入，会发现事务B无法写入，显示正在等待状态。这是事务隔离级别中最严格的。</p>
 
 		
 	  

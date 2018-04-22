@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
-  <title>高并发环境下mysql的调优 | Kevin Chow&#39;s blog</title>
+  <title>高并发环境下mysql的配置参数调优 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="skip-locking避免MySQL的外部锁定，减少出错几率增强稳定性。   back_log = 384back_log 参数的值指出在MySQL暂时停止响应新请求之前的短时间内多少个请求可以被存在堆栈中。对于Linux系统推荐设置为小于512的整数。   key_buffer_size = 256Mkey_buffer_size指定用于索引的缓冲区大小，增加它可得到更好的索引处理性能。对于内">
+  <meta name="description" content="skip-locking避免MySQL的外部锁定，减少出错几率增强稳定性。">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="高并发环境下mysql的调优">
-<meta property="og:url" content="https://ouzhrm.github.io/2018/04/21/高并发环境下mysql的调优/index.html">
+<meta property="og:title" content="高并发环境下mysql的配置参数调优">
+<meta property="og:url" content="https://ouzhrm.github.io/2018/04/21/高并发环境下mysql的配置参数调优/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="skip-locking避免MySQL的外部锁定，减少出错几率增强稳定性。   back_log = 384back_log 参数的值指出在MySQL暂时停止响应新请求之前的短时间内多少个请求可以被存在堆栈中。对于Linux系统推荐设置为小于512的整数。   key_buffer_size = 256Mkey_buffer_size指定用于索引的缓冲区大小，增加它可得到更好的索引处理性能。对于内">
+<meta property="og:description" content="skip-locking避免MySQL的外部锁定，减少出错几率增强稳定性。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-21T05:19:13.918Z">
+<meta property="og:updated_time" content="2018-04-22T08:32:54.908Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="高并发环境下mysql的调优">
-<meta name="twitter:description" content="skip-locking避免MySQL的外部锁定，减少出错几率增强稳定性。   back_log = 384back_log 参数的值指出在MySQL暂时停止响应新请求之前的短时间内多少个请求可以被存在堆栈中。对于Linux系统推荐设置为小于512的整数。   key_buffer_size = 256Mkey_buffer_size指定用于索引的缓冲区大小，增加它可得到更好的索引处理性能。对于内">
+<meta name="twitter:title" content="高并发环境下mysql的配置参数调优">
+<meta name="twitter:description" content="skip-locking避免MySQL的外部锁定，减少出错几率增强稳定性。">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -147,19 +147,19 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-高并发环境下mysql的调优" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-高并发环境下mysql的配置参数调优" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      高并发环境下mysql的调优
+      高并发环境下mysql的配置参数调优
     </h1>
   
 
         
-        <a href="/2018/04/21/高并发环境下mysql的调优/" class="archive-article-date">
+        <a href="/2018/04/21/高并发环境下mysql的配置参数调优/" class="archive-article-date">
   	<time datetime="2018-04-21T04:04:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-21</time>
 </a>
         
@@ -169,8 +169,7 @@
 		 
 		
 		
-		  <p><strong>skip-locking</strong><br>避免MySQL的外部锁定，减少出错几率增强稳定性。  </p>
-<p><strong>back_log = 384</strong><br>back_log 参数的值指出在MySQL暂时停止响应新<br>请求之前的短时间内多少个请求可以被存在堆栈中。<br>对于Linux系统推荐设置为小于512的整数。  </p>
+		  <p><strong>skip-locking</strong><br>避免MySQL的外部锁定，减少出错几率增强稳定性。<br><a id="more"></a><br><strong>back_log = 384</strong><br>back_log 参数的值指出在MySQL暂时停止响应新<br>请求之前的短时间内多少个请求可以被存在堆栈中。<br>对于Linux系统推荐设置为小于512的整数。  </p>
 <p><strong>key_buffer_size = 256M</strong><br>key_buffer_size指定用于索引的缓冲区大小，增<br>加它可得到更好的索引处理性能。对于内存在4GB<br>左右的服务器该参数可设置为256M或384M。注意：<br>该参数值设置的过大反而会是服务器整体效率降低！  </p>
 <p><strong>sort_buffer_size = 6M</strong><br><strong>查询排序时所能使用的缓冲区大小</strong>。注意：该参数<br>对应的分配内存是每连接独占，如果有100个连接，<br>那么实际分配的总共排序缓冲区大小为100 × 6 ＝<br>600MB。内存在4GB左右的服务器推荐设置为6-8M。  </p>
 <p><strong>read_buffer_size = 4M</strong><br>读查询操作所能使用的缓冲区大小。<br>和sort_buffer_size一样，该参数对应的分配内存<br>也是每连接独享。 </p>
@@ -300,7 +299,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2018/04/21/高并发环境下mysql的调优/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2018/04/21/高并发环境下mysql的配置参数调优/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -313,6 +312,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/04/22/mysql存储引擎的选择及使用场景/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          mysql存储引擎的选择及使用场景
+        
+      </div>
+    </a>
   
   
     <a href="/2018/04/19/mysql常用配置参数/" id="article-nav-older" class="article-nav-link-wrap">
