@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
   <title>mysql常用配置参数 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这个文件，设置相关的运行环境参数。查询当前全部参数设置sql语句为：show variables">
+  <meta name="description" content="mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这个文件，设置相关的运行环境参数。查询当前全部参数设置sql语句为：show variables下面是一些常用的配置参数：port=3306mysql使用的端口号 atadir=/data/mysql数据文档存储目录,默认为/var/lib/mysql skip-slave-start">
 <meta name="keywords" content="mysql,数据库">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql常用配置参数">
 <meta property="og:url" content="https://ouzhrm.github.io/2018/04/19/mysql常用配置参数/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这个文件，设置相关的运行环境参数。查询当前全部参数设置sql语句为：show variables">
+<meta property="og:description" content="mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这个文件，设置相关的运行环境参数。查询当前全部参数设置sql语句为：show variables下面是一些常用的配置参数：port=3306mysql使用的端口号 atadir=/data/mysql数据文档存储目录,默认为/var/lib/mysql skip-slave-start">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-22T08:32:33.026Z">
+<meta property="og:updated_time" content="2018-05-05T13:48:36.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql常用配置参数">
-<meta name="twitter:description" content="mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这个文件，设置相关的运行环境参数。查询当前全部参数设置sql语句为：show variables">
+<meta name="twitter:description" content="mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这个文件，设置相关的运行环境参数。查询当前全部参数设置sql语句为：show variables下面是一些常用的配置参数：port=3306mysql使用的端口号 atadir=/data/mysql数据文档存储目录,默认为/var/lib/mysql skip-slave-start">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -169,7 +169,8 @@
 		 
 		
 		
-		  <p>mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这<br>个文件，设置相关的运行环境参数。<br>查询当前全部参数设置sql语句为：show variables<br><a id="more"></a><br>下面是一些常用的配置参数：<br><strong>port=3306</strong><br>mysql使用的端口号</p>
+		  <a id="more"></a>
+<p>mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这<br>个文件，设置相关的运行环境参数。<br>查询当前全部参数设置sql语句为：show variables<br>下面是一些常用的配置参数：<br><strong>port=3306</strong><br>mysql使用的端口号</p>
 <p><strong>atadir=/data/mysql</strong><br>数据文档存储目录,默认为/var/lib/mysql</p>
 <p><strong>skip-slave-start</strong><br>禁止slave复制进程随Mysql数据库启动而启动，默认为未启用</p>
 <p><strong>skip-name-resolve</strong><br>禁止Mysql进行DNS反向解析,默认为未启用,安装的MySql开启了DNS的反向解析,<br>禁止DNS反向解析后,只能通过Mysql授权表中IP来访问,可以提高Mysql访问速度.</p>
