@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
   <title>mysql存储引擎的选择及使用场景 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="mysql常用的存储引擎有InnoDB、MYISAM、Archive、MemoryInnoDB支持事务以及外键，其他的三种存储引擎是不支持的。锁的粒度是行锁，最大存储容量为64TB，采用MVCC来支持高并发的。默认的隔离级别是可重复读，并通过间隙锁来防止幻读的。另外最关键的是它支持热备份，其他存储引擎是不支持的，集群的一般选择这种引擎。 MYISAMMYISAM存储引擎的锁粒度是表锁。物理文件结">
+  <meta name="description" content="mysql常用的存储引擎有InnoDB、MYISAM、Archive、MemoryInnoDB支持事务以及外键，其他的三种存储引擎是不支持的。锁的粒度是行锁，最大存储容量为64TB，采用MVCC来支持高并发的。默认的隔离级别是可重复读，并通过间隙">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql存储引擎的选择及使用场景">
 <meta property="og:url" content="https://ouzhrm.github.io/2018/04/22/mysql存储引擎的选择及使用场景/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="mysql常用的存储引擎有InnoDB、MYISAM、Archive、MemoryInnoDB支持事务以及外键，其他的三种存储引擎是不支持的。锁的粒度是行锁，最大存储容量为64TB，采用MVCC来支持高并发的。默认的隔离级别是可重复读，并通过间隙锁来防止幻读的。另外最关键的是它支持热备份，其他存储引擎是不支持的，集群的一般选择这种引擎。 MYISAMMYISAM存储引擎的锁粒度是表锁。物理文件结">
+<meta property="og:description" content="mysql常用的存储引擎有InnoDB、MYISAM、Archive、MemoryInnoDB支持事务以及外键，其他的三种存储引擎是不支持的。锁的粒度是行锁，最大存储容量为64TB，采用MVCC来支持高并发的。默认的隔离级别是可重复读，并通过间隙">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-05T13:48:47.257Z">
+<meta property="og:updated_time" content="2018-05-20T08:35:53.607Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql存储引擎的选择及使用场景">
-<meta name="twitter:description" content="mysql常用的存储引擎有InnoDB、MYISAM、Archive、MemoryInnoDB支持事务以及外键，其他的三种存储引擎是不支持的。锁的粒度是行锁，最大存储容量为64TB，采用MVCC来支持高并发的。默认的隔离级别是可重复读，并通过间隙锁来防止幻读的。另外最关键的是它支持热备份，其他存储引擎是不支持的，集群的一般选择这种引擎。 MYISAMMYISAM存储引擎的锁粒度是表锁。物理文件结">
+<meta name="twitter:description" content="mysql常用的存储引擎有InnoDB、MYISAM、Archive、MemoryInnoDB支持事务以及外键，其他的三种存储引擎是不支持的。锁的粒度是行锁，最大存储容量为64TB，采用MVCC来支持高并发的。默认的隔离级别是可重复读，并通过间隙">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -169,8 +169,7 @@
 		 
 		
 		
-		  <a id="more"></a>
-<p>mysql常用的存储引擎有InnoDB、MYISAM、Archive、Memory<br><strong>InnoDB</strong><br>支持事务以及外键，其他的三种存储引擎是不支持的。锁的粒度是行锁，最大存储<br>容量为64TB，采用MVCC来支持高并发的。默认的隔离级别是可重复读，并通过间隙<br>锁来防止幻读的。另外最关键的是它支持热备份，其他存储引擎是不支持的，集群<br>的一般选择这种引擎。</p>
+		  <p>mysql常用的存储引擎有InnoDB、MYISAM、Archive、Memory<br><strong>InnoDB</strong><br>支持事务以及外键，其他的三种存储引擎是不支持的。锁的粒度是行锁，最大存储<br>容量为64TB，采用MVCC来支持高并发的。默认的隔离级别是可重复读，并通过间隙<br><a id="more"></a><br>锁来防止幻读的。另外最关键的是它支持热备份，其他存储引擎是不支持的，集群<br>的一般选择这种引擎。</p>
 <p><strong>MYISAM</strong><br>MYISAM存储引擎的锁粒度是表锁。物理文件结构是frm文件存储表的结构，myd文件<br>存储表的数据，myi文件存储索引。这三个文件分别放在不同的位置，以获取更快的<br>查询和插入的速度。最大的索引数为64，索引可以为null值，这个值占0~1个字节。<br>每个MyISAM类型的表都有一个AUTO_INCREMENT的内部列，当INSERT和UPDATE操作的<br>时候该列被更新，同时AUTO_INCREMENT列将被刷新。所以说，MyISAM类型表的<br>AUTO_INCREMENT列更新比InnoDB类型的AUTO_INCREMENT更快。<br><strong>Archive</strong><br>Archive引擎支持高并发的批量插入，但是不支持事务、索引和缓存，所以带有不<br>安全性。由于数据可压缩，所以占空间比较小。<br><strong>Memory</strong><br>数据存在内存中，所以数据查询起来的速度很快，但如果断电或者宕机等外界因素<br>的存在，数据会丢失。不支持BLOB或TEXT类型的列，<br>每行的长度是固定的，所以会使部分内存浪费。</p>
 <p>####使用场景<br>InnoDB由于支持事务、热备份等特性，所以对数据严谨性较高的，比如支付、订<br>单、mysql集群等场景使用。<br>MYISAM和archive，如果数据表主要用来插入和查询记录，比如日志的记录，那么<br>用MYISAM或者archive比较合适。<br>Memory主要用于创建临时表，存放查询的中间结果，对数据安全性是否会出现数<br>据丢失等要求不高时，可以用Memory存储引擎。</p>
 
@@ -421,7 +420,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -429,11 +428,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">秒杀</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">电商</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">订单</a>
               </li>
             
             <div class="clearfix"></div>

@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
   <title>mysql执行计划 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运行同样的sql语句时却发现迟迟没有结果，这个时候才知道数据规模已经限制了我们查询的速度。所以，查询优化和索引也就显得很重要了。 MySql提供了EXPLAIN语法用来进行查询分析，在SQL语句前加">
+  <meta name="description" content="实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mysql执行计划">
 <meta property="og:url" content="https://ouzhrm.github.io/2018/04/24/mysql 执行计划/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运行同样的sql语句时却发现迟迟没有结果，这个时候才知道数据规模已经限制了我们查询的速度。所以，查询优化和索引也就显得很重要了。 MySql提供了EXPLAIN语法用来进行查询分析，在SQL语句前加">
+<meta property="og:description" content="实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-05T13:48:22.549Z">
+<meta property="og:updated_time" content="2018-05-20T08:35:30.414Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql执行计划">
-<meta name="twitter:description" content="实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运行同样的sql语句时却发现迟迟没有结果，这个时候才知道数据规模已经限制了我们查询的速度。所以，查询优化和索引也就显得很重要了。 MySql提供了EXPLAIN语法用来进行查询分析，在SQL语句前加">
+<meta name="twitter:description" content="实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -169,8 +169,7 @@
 		 
 		
 		
-		  <a id="more"></a>
-<p>实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，<br>数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就<br>很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运<br>行同样的sql语句时却发现迟迟没有结果，这个时候才知道数据规模已经限<br>制了我们查询的速度。所以，查询优化和索引也就显得很重要了。</p>
+		  <p>实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，<br>数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就<br>很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运<br><a id="more"></a><br>行同样的sql语句时却发现迟迟没有结果，这个时候才知道数据规模已经限<br>制了我们查询的速度。所以，查询优化和索引也就显得很重要了。</p>
 <p>MySql提供了EXPLAIN语法用来进行查询分析，在SQL语句前加一个”EXPLAIN”<br>即可。<br>如：explain select * from table where table.id = 1 </p>
 <p>运行上面的sql语句后你会看到，下面的表头信息：<br>id | select_type | table | type | possible_keys | key | key_len | ref | rows | Extra</p>
 <p>id : id列数字越大越先执行，如果说数字一样大，那么就从上往下依次执行</p>
@@ -450,7 +449,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -458,11 +457,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">秒杀</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">电商</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">订单</a>
               </li>
             
             <div class="clearfix"></div>

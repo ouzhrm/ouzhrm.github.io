@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
   <title>再议索引 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="关于索引的使用1、最适合建索引的列有：where后边的、联接（join）条件相关的列、order by相关的列、group by 相关的列。2、数据量区分度要大些，如男女数据量各占50%的就不需要建索引。3、索引的长度(体积)尽可能的小。4、复合索引要充分满足最左前缀。如：建的复合索引为 （state、city、zip），则能命中索引的条件有：state、city、zipstate、cityst">
+  <meta name="description" content="关于索引的使用1、最适合建索引的列有：where后边的、联接（join）条件相关的列、order by相关的列、group by 相关的列。2、数据量区分度要大些，如男女数据量各占50%的就不需要建索引。">
 <meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="再议索引">
 <meta property="og:url" content="https://ouzhrm.github.io/2018/05/05/再议索引/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="关于索引的使用1、最适合建索引的列有：where后边的、联接（join）条件相关的列、order by相关的列、group by 相关的列。2、数据量区分度要大些，如男女数据量各占50%的就不需要建索引。3、索引的长度(体积)尽可能的小。4、复合索引要充分满足最左前缀。如：建的复合索引为 （state、city、zip），则能命中索引的条件有：state、city、zipstate、cityst">
+<meta property="og:description" content="关于索引的使用1、最适合建索引的列有：where后边的、联接（join）条件相关的列、order by相关的列、group by 相关的列。2、数据量区分度要大些，如男女数据量各占50%的就不需要建索引。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-05T13:47:53.859Z">
+<meta property="og:updated_time" content="2018-05-20T08:37:00.932Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="再议索引">
-<meta name="twitter:description" content="关于索引的使用1、最适合建索引的列有：where后边的、联接（join）条件相关的列、order by相关的列、group by 相关的列。2、数据量区分度要大些，如男女数据量各占50%的就不需要建索引。3、索引的长度(体积)尽可能的小。4、复合索引要充分满足最左前缀。如：建的复合索引为 （state、city、zip），则能命中索引的条件有：state、city、zipstate、cityst">
+<meta name="twitter:description" content="关于索引的使用1、最适合建索引的列有：where后边的、联接（join）条件相关的列、order by相关的列、group by 相关的列。2、数据量区分度要大些，如男女数据量各占50%的就不需要建索引。">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -169,8 +169,7 @@
 		 
 		
 		
-		  <a id="more"></a>
-<h5 id="关于索引的使用"><a href="#关于索引的使用" class="headerlink" title="关于索引的使用"></a>关于索引的使用</h5><p>1、最适合建索引的列有：where后边的、联接（join）条件相关的列、<br>order by相关的列、group by 相关的列。<br>2、数据量区分度要大些，如男女数据量各占50%的就不需要建索引。<br>3、索引的长度(体积)尽可能的小。<br>4、复合索引要充分满足最左前缀。如：建的复合索引为</p>
+		  <h5 id="关于索引的使用"><a href="#关于索引的使用" class="headerlink" title="关于索引的使用"></a>关于索引的使用</h5><p>1、最适合建索引的列有：where后边的、联接（join）条件相关的列、<br>order by相关的列、group by 相关的列。<br>2、数据量区分度要大些，如男女数据量各占50%的就不需要建索引。<br><a id="more"></a><br>3、索引的长度(体积)尽可能的小。<br>4、复合索引要充分满足最左前缀。如：建的复合索引为</p>
 <p>（state、city、zip），则能命中索引的条件有：<br>state、city、zip<br>state、city<br>state<br>5、索引建的数量要适当，因为索引多的话，查询快了，但是更新慢。<br>6、InnoDB，MYISAM总是使用B+树索引。MEMORY存储引擎默认使用Hash索引.<br>Hash索引在使用“=”，“&lt;=&gt;”比较快，范围查找比较慢，如：id&lt;30或者weight<br> between 100 and 150.而“B树”范围查找比较快</p>
 <h5 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h5><p>1.普通索引 index<br>创建：CREATE INDEX index_name ON table(column(length))。<br>修改：ALTER TABLE table_name ADD INDEX index_name ON (column(length))<br>创建表的时候同时创建索引：<br>CREATE TABLE <code>table</code> (<br>    <code>id</code> int(11) NOT NULL AUTO_INCREMENT ,<br>    <code>title</code> char(255) CHARACTER NOT NULL ,<br>    <code>content</code> text CHARACTER NULL ,<br>    <code>time</code> int(10) NULL DEFAULT NULL ,<br>    PRIMARY KEY (<code>id</code>),<br>    INDEX index_name (title(length))<br>)<br>删除：DROP INDEX index_name ON table。</p>
 <p>2.唯一索引 unique index<br>索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。<br>创建：CREATE UNIQUE INDEX indexName ON table(column(length))<br>修改：ALTER TABLE table_name ADD UNIQUE indexName ON (column(length))<br>创建表的时候直接指定：<br>CREATE TABLE <code>table</code> (<br>    <code>id</code> int(11) NOT NULL AUTO_INCREMENT ,<br>    <code>title</code> char(255) CHARACTER NOT NULL ,<br>    <code>content</code> text CHARACTER NULL ,<br>    <code>time</code> int(10) NULL DEFAULT NULL ,<br>    UNIQUE indexName (title(length))<br>);</p>
@@ -435,7 +434,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -443,11 +442,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">秒杀</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">电商</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">订单</a>
               </li>
             
             <div class="clearfix"></div>

@@ -8,18 +8,18 @@
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
   <title>做收银台模块的经验总结 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1、仔细阅读官方文档，如预支付、退款、支付回调、查询模块，相关的请求参数、响应参数以及开发的步骤，api字典等，还有应用公私密钥的生成方式（2048长度、java适用）、注意应用公钥、应用私钥、支付宝公钥这几个别搞混了。2、引进alipay sdk包的最好用maven方式。不要单独添加到项目来，然后build path依赖一下，不然上线的时候会有很多的麻烦，报ClassNotFound等很多异常">
+  <meta name="description" content="1、仔细阅读官方文档，如预支付、退款、支付回调、查询模块，相关的请求参数、响应参数以及开发的步骤，api字典等，还有应用公私密钥的生成方式（2048长度、java适用）、注意应用公钥、应用私钥、支付宝公钥这几个别搞混了。">
 <meta name="keywords" content="支付">
 <meta property="og:type" content="article">
 <meta property="og:title" content="做收银台模块的经验总结">
 <meta property="og:url" content="https://ouzhrm.github.io/2018/05/09/做收银台模块的经验总结/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="1、仔细阅读官方文档，如预支付、退款、支付回调、查询模块，相关的请求参数、响应参数以及开发的步骤，api字典等，还有应用公私密钥的生成方式（2048长度、java适用）、注意应用公钥、应用私钥、支付宝公钥这几个别搞混了。2、引进alipay sdk包的最好用maven方式。不要单独添加到项目来，然后build path依赖一下，不然上线的时候会有很多的麻烦，报ClassNotFound等很多异常">
+<meta property="og:description" content="1、仔细阅读官方文档，如预支付、退款、支付回调、查询模块，相关的请求参数、响应参数以及开发的步骤，api字典等，还有应用公私密钥的生成方式（2048长度、java适用）、注意应用公钥、应用私钥、支付宝公钥这几个别搞混了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-09T10:03:35.713Z">
+<meta property="og:updated_time" content="2018-05-20T08:37:15.348Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="做收银台模块的经验总结">
-<meta name="twitter:description" content="1、仔细阅读官方文档，如预支付、退款、支付回调、查询模块，相关的请求参数、响应参数以及开发的步骤，api字典等，还有应用公私密钥的生成方式（2048长度、java适用）、注意应用公钥、应用私钥、支付宝公钥这几个别搞混了。2、引进alipay sdk包的最好用maven方式。不要单独添加到项目来，然后build path依赖一下，不然上线的时候会有很多的麻烦，报ClassNotFound等很多异常">
+<meta name="twitter:description" content="1、仔细阅读官方文档，如预支付、退款、支付回调、查询模块，相关的请求参数、响应参数以及开发的步骤，api字典等，还有应用公私密钥的生成方式（2048长度、java适用）、注意应用公钥、应用私钥、支付宝公钥这几个别搞混了。">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -169,8 +169,7 @@
 		 
 		
 		
-		  <a id="more"></a>
-<p>1、仔细阅读官方文档，如预支付、退款、支付回调、查询模块，相关的请求参数、响应<br>参数以及开发的步骤，api字典等，还有应用公私密钥的生成方式（2048长度、java适用）、<br>注意应用公钥、应用私钥、支付宝公钥这几个别搞混了。<br>2、引进alipay sdk包的最好用maven方式。不要单独添加到项目来，然后build path<br>依赖一下，不然上线的时候会有很多的麻烦，报ClassNotFound等很多异常。<br>3、公网内网的问题，在回调响应的时候，如果配置成内网的地址，外网会访问不进来的，<br>所以最好配成域名的格式，这里困了大半天，晕。。。<br>4、app支付相关，如果只申请app支付的方式，那么只能用app支付，用官方的android或<br>者ios的demo支付，不然会根据订单号查询不出来，显示这个记录不存在。<br>5、java获取linux和windows系统当前ip的方式是不同的，如果想动态配置ip地址的，<br>这个最好了解一下。</p>
+		  <p>1、仔细阅读官方文档，如预支付、退款、支付回调、查询模块，相关的请求参数、响应<br>参数以及开发的步骤，api字典等，还有应用公私密钥的生成方式（2048长度、java适用）、<br>注意应用公钥、应用私钥、支付宝公钥这几个别搞混了。<br><a id="more"></a><br>2、引进alipay sdk包的最好用maven方式。不要单独添加到项目来，然后build path<br>依赖一下，不然上线的时候会有很多的麻烦，报ClassNotFound等很多异常。<br>3、公网内网的问题，在回调响应的时候，如果配置成内网的地址，外网会访问不进来的，<br>所以最好配成域名的格式，这里困了大半天，晕。。。<br>4、app支付相关，如果只申请app支付的方式，那么只能用app支付，用官方的android或<br>者ios的demo支付，不然会根据订单号查询不出来，显示这个记录不存在。<br>5、java获取linux和windows系统当前ip的方式是不同的，如果想动态配置ip地址的，<br>这个最好了解一下。</p>
 <p>————-     未完待续    —————</p>
 
 		
@@ -286,6 +285,15 @@
 
   
 <nav id="article-nav">
+  
+    <a href="/2018/05/20/秒杀系统的设计与实践《一》/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          秒杀系统的设计与实践《一》
+        
+      </div>
+    </a>
   
   
     <a href="/2018/05/05/再议索引/" id="article-nav-older" class="article-nav-link-wrap">
@@ -411,7 +419,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -419,11 +427,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">秒杀</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">电商</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">订单</a>
               </li>
             
             <div class="clearfix"></div>

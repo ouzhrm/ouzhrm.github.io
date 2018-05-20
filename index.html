@@ -148,6 +148,93 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-秒杀系统的设计与实践《一》" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/20/秒杀系统的设计与实践《一》/">秒杀系统的设计与实践《一》</a>
+    </h1>
+  
+
+        
+        <a href="/2018/05/20/秒杀系统的设计与实践《一》/" class="archive-article-date">
+  	<time datetime="2018-05-20T08:24:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+		 
+		<p>秒杀系统的设计思路。</p>
+<p>1、下单过程：<br>校验库存<br>更新库存<br>创建订单<br>支付（本文暂先不考虑）<br>
+		
+	  
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">秒杀</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">并发</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">电商</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">订单</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/05/20/秒杀系统的设计与实践《一》/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-做收银台模块的经验总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -168,10 +255,7 @@
     
     <div class="article-entry" itemprop="articleBody">
 		 
-		
-		
-		  <a id="more"></a>
-		  
+		<p>1、仔细阅读官方文档，如预支付、退款、支付回调、查询模块，相关的请求参数、响应<br>参数以及开发的步骤，api字典等，还有应用公私密钥的生成方式（2048长度、java适用）、<br>注意应用公钥、应用私钥、支付宝公钥这几个别搞混了。<br>
 		
 	  
 
@@ -245,10 +329,7 @@
     
     <div class="article-entry" itemprop="articleBody">
 		 
-		
-		
-		  <a id="more"></a>
-		  
+		<h5 id="关于索引的使用"><a href="#关于索引的使用" class="headerlink" title="关于索引的使用"></a>关于索引的使用</h5><p>1、最适合建索引的列有：where后边的、联接（join）条件相关的列、<br>order by相关的列、group by 相关的列。<br>2、数据量区分度要大些，如男女数据量各占50%的就不需要建索引。<br>
 		
 	  
 
@@ -322,10 +403,7 @@
     
     <div class="article-entry" itemprop="articleBody">
 		 
-		
-		
-		  <a id="more"></a>
-		  
+		<p>今天在网上本身奔着美团点评的sql索引优化工具去的，在它们的博客找了找，<br>无意中浏览到<a href="https://tech.meituan.com/study_vs_work.html" target="_blank" rel="noopener">工作中如何做好技术积累</a>这篇文章，好奇心让我点开看了一遍。<br>发现有些还是可以借鉴的，但是有一些让人无法琢磨的，也就是说一半留一半的感觉，<br>
 		
 	  
 
@@ -410,10 +488,7 @@
     
     <div class="article-entry" itemprop="articleBody">
 		 
-		
-		
-		  <a id="more"></a>
-		  
+		<p>实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，<br>数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就<br>很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运<br>
 		
 	  
 
@@ -487,10 +562,7 @@
     
     <div class="article-entry" itemprop="articleBody">
 		 
-		
-		
-		  <a id="more"></a>
-		  
+		<p>mysql常用的存储引擎有InnoDB、MYISAM、Archive、Memory<br><strong>InnoDB</strong><br>支持事务以及外键，其他的三种存储引擎是不支持的。锁的粒度是行锁，最大存储<br>容量为64TB，采用MVCC来支持高并发的。默认的隔离级别是可重复读，并通过间隙<br>
 		
 	  
 
@@ -564,10 +636,7 @@
     
     <div class="article-entry" itemprop="articleBody">
 		 
-		
-		
-		  <a id="more"></a>
-		  
+		<p><strong>skip-locking</strong><br>避免MySQL的外部锁定，减少出错几率增强稳定性。<br>
 		
 	  
 
@@ -641,10 +710,7 @@
     
     <div class="article-entry" itemprop="articleBody">
 		 
-		
-		
-		  <a id="more"></a>
-		  
+		<p>mysql在启动的时候，会加载my.ini（Linux系统下是my.cnf），即当mysql服务器启动时它会读取这<br>个文件，设置相关的运行环境参数。<br>
 		
 	  
 
@@ -722,10 +788,7 @@
     
     <div class="article-entry" itemprop="articleBody">
 		 
-		
-		
-		  <a id="more"></a>
-		  
+		<p>1.读没提交<br>事务A没有提交，做了一些写入或者更新操作，事务B可以读，但如果事务B发生回滚，那么就会出现脏读现象。<br>脏读可以理解成还没提交你就开始读，真脏的意思。实际做生产的时候一般不会使用这种事务。<br>
 		
 	  
 
@@ -779,94 +842,6 @@
 
 
   
-    <article id="post-《大型网站技术架构-核心原理与案例分析》读书总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/18/《大型网站技术架构-核心原理与案例分析》读书总结/">《大型网站技术架构 核心原理与案例分析》读书总结</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/18/《大型网站技术架构-核心原理与案例分析》读书总结/" class="archive-article-date">
-  	<time datetime="2018-04-18T02:21:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-		 
-		
-		
-		  <a id="more"></a>
-		  
-		
-	  
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">分布式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/读书//" class="article-tag-list-link color3">读书</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/18/《大型网站技术架构-核心原理与案例分析》读书总结/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-《mysql高性能架构设计》读书总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -887,10 +862,7 @@
     
     <div class="article-entry" itemprop="articleBody">
 		 
-		
-		
-		  <a id="more"></a>
-		  
+		<h5 id="此书的详细内容"><a href="#此书的详细内容" class="headerlink" title="此书的详细内容"></a>此书的详细内容</h5><p>作者：简朝阳<br>出版社: 电子工业出版社<br>出版年: 2009-6<br>
 		
 	  
 
@@ -1048,7 +1020,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1056,11 +1028,27 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">秒杀</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">并发</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">电商</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">订单</a>
               </li>
             
             <div class="clearfix"></div>
