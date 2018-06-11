@@ -148,6 +148,86 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-mybatis源码解析《一》-缓存" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/11/mybatis源码解析《一》-缓存/">mybatis源码解析《一》 - 缓存</a>
+    </h1>
+  
+
+        
+        <a href="/2018/06/11/mybatis源码解析《一》-缓存/" class="archive-article-date">
+  	<time datetime="2018-06-11T11:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-11</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+		 
+		<p>0、缓存前言<br>在阅读mybatis源码之前,我们要做一些准备工作。<br>第一、良好的搜索工具google，我们要站在巨人的肩膀上，<br>不懂就google一下。<br>第二、一套mybatis的源码，当然你说我只下jar包也可以，<br>但这样看的费劲。一些变量会比如反编译成var1，a2这种模式。<br>第三、Myjj,最大的同性基友交流网站，最大的源码开源网站，<br>不过最近被微软收购了，果然是气大财粗。</p>
+<p>mybatis,version3.3.0的地址：<br><a href="https://github.com/tuguangquan/mybatis" target="_blank" rel="noopener">https://github.com/tuguangquan/mybatis</a><br>（有中文注释哟，当然我也不反对下官方的源码）</p>
+<p>官方的源码：<br><a href="https://github.com/mybatis/mybatis-3" target="_blank" rel="noopener">https://github.com/mybatis/mybatis-3</a></p>
+<p>别人搭好的mybatis maven项目demo：<br><a href="https://github.com/kailuncen/mybatis-cache-demo" target="_blank" rel="noopener">https://github.com/kailuncen/mybatis-cache-demo</a></p>
+<p>有了这些，还差一个老师：<br><a href="http://www.cnblogs.com/fangjian0423/p/mybatis-cache.html" target="_blank" rel="noopener">http://www.cnblogs.com/fangjian0423/p/mybatis-cache.html</a></p>
+<p>在mybatis的底层源码中，缓存其实就是对应java集合的Map。</p>
+<p>1、mybatis的缓存分类：<br>一级缓存，典型的如PerpetualCache这个类，而一级缓存的范围，<br>localCacheScope，其实就是是否开启一级缓存的意思。<br>而localCacheScope可选的有：<br>SESSION(默认)。<br>STATEMENT(如果本地会话只用于语句执行，<br>则不会在同一个SQL会话的两个不同调用之间共享数据。)<br>
+		
+	  
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">mybatis</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/06/11/mybatis源码解析《一》-缓存/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-秒杀系统的设计与实践《一》" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -724,11 +804,11 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
         		</li>
       		
 		</ul>
@@ -813,91 +893,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2018/04/19/数据库事务的四种隔离级别/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-《mysql高性能架构设计》读书总结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/18/《mysql高性能架构设计》读书总结/">《MySQL性能调优与架构设计》学习总结</a>
-    </h1>
-  
-
-        
-        <a href="/2018/04/18/《mysql高性能架构设计》读书总结/" class="archive-article-date">
-  	<time datetime="2018-04-18T02:21:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-		 
-		<h5 id="此书的详细内容"><a href="#此书的详细内容" class="headerlink" title="此书的详细内容"></a>此书的详细内容</h5><p>作者：简朝阳<br>出版社: 电子工业出版社<br>出版年: 2009-6<br>
-		
-	  
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/读书//" class="article-tag-list-link color3">读书</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2018/04/18/《mysql高性能架构设计》读书总结/">展开全文 >></a>
         </p>
       
 
@@ -1016,11 +1011,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1028,7 +1019,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">支付</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">

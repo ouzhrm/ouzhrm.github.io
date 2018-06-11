@@ -6,20 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
-  <title>mysql执行计划 | Kevin Chow&#39;s blog</title>
+  <title>mybatis源码解析《一》 - 缓存 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运">
-<meta name="keywords" content="mysql">
+  <meta name="description" content="0、缓存前言在阅读mybatis源码之前,我们要做一些准备工作。第一、良好的搜索工具google，我们要站在巨人的肩膀上，不懂就google一下。第二、一套mybatis的源码，当然你说我只下jar包也可以，但这样看的费劲。一些变量会比如反编译成var1，a2这种模式。第三、Myjj,最大的同性基友交流网站，最大的源码开源网站，不过最近被微软收购了，果然是气大财粗。 mybatis,version">
+<meta name="keywords" content="mybatis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mysql执行计划">
-<meta property="og:url" content="https://ouzhrm.github.io/2018/04/24/mysql 执行计划/index.html">
+<meta property="og:title" content="mybatis源码解析《一》 - 缓存">
+<meta property="og:url" content="https://ouzhrm.github.io/2018/06/11/mybatis源码解析《一》-缓存/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运">
+<meta property="og:description" content="0、缓存前言在阅读mybatis源码之前,我们要做一些准备工作。第一、良好的搜索工具google，我们要站在巨人的肩膀上，不懂就google一下。第二、一套mybatis的源码，当然你说我只下jar包也可以，但这样看的费劲。一些变量会比如反编译成var1，a2这种模式。第三、Myjj,最大的同性基友交流网站，最大的源码开源网站，不过最近被微软收购了，果然是气大财粗。 mybatis,version">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-20T08:35:30.414Z">
+<meta property="og:updated_time" content="2018-06-11T11:56:13.501Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="mysql执行计划">
-<meta name="twitter:description" content="实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运">
+<meta name="twitter:title" content="mybatis源码解析《一》 - 缓存">
+<meta name="twitter:description" content="0、缓存前言在阅读mybatis源码之前,我们要做一些准备工作。第一、良好的搜索工具google，我们要站在巨人的肩膀上，不懂就google一下。第二、一套mybatis的源码，当然你说我只下jar包也可以，但这样看的费劲。一些变量会比如反编译成var1，a2这种模式。第三、Myjj,最大的同性基友交流网站，最大的源码开源网站，不过最近被微软收购了，果然是气大财粗。 mybatis,version">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -147,20 +147,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-mysql 执行计划" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-mybatis源码解析《一》-缓存" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      mysql执行计划
+      mybatis源码解析《一》 - 缓存
     </h1>
   
 
         
-        <a href="/2018/04/24/mysql 执行计划/" class="archive-article-date">
-  	<time datetime="2018-04-24T02:21:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-24</time>
+        <a href="/2018/06/11/mybatis源码解析《一》-缓存/" class="archive-article-date">
+  	<time datetime="2018-06-11T11:34:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-11</time>
 </a>
         
       </header>
@@ -169,38 +169,19 @@
 		 
 		
 		
-		  <p>实际项目开发中，由于我们不知道实际查询的时候数据库里发生了什么事情，<br>数据库软件是怎样扫描表、怎样使用索引的，因此，在写sql语句的时候就<br>很少考虑到性能的问题。但是当数据规模增大，如千万、亿的时候，我们运<br><a id="more"></a><br>行同样的sql语句时却发现迟迟没有结果，这个时候才知道数据规模已经限<br>制了我们查询的速度。所以，查询优化和索引也就显得很重要了。</p>
-<p>MySql提供了EXPLAIN语法用来进行查询分析，在SQL语句前加一个”EXPLAIN”<br>即可。<br>如：explain select * from table where table.id = 1 </p>
-<p>运行上面的sql语句后你会看到，下面的表头信息：<br>id | select_type | table | type | possible_keys | key | key_len | ref | rows | Extra</p>
-<p>id : id列数字越大越先执行，如果说数字一样大，那么就从上往下依次执行</p>
-<p>(select_type看不懂的，可以了解一下即可)<br>select_type列常见的有：<br>A：simple：表示不需要union操作或者不包含子查询的简单select查询。<br>有连接查询时，外层的查询为simple，且只有一个。<br>B：primary：一个需要union操作或者含有子查询的select，位于最外层的<br>单位查询的select_type即为primary。且只有一个。<br>C：union：union连接的两个select查询，第一个查询是dervied派生表，除<br>了第一个表外，第二个以后的表select_type都是union。<br>D：dependent union：与union一样，出现在union 或union all语句中，但<br>是这个查询要受到外部查询的影响。<br>E：union result：包含union的结果集，在union和union all语句中,因为它<br>不需要参与查询，所以id字段为null。<br>F：subquery：除了from字句中包含的子查询外，其他地方出现的子查询都可<br>能是subquery。<br>G：dependent subquery：与dependent union类似，表示这个subquery的查询<br>要受到外部表查询的影响。<br>H：derived：from字句中出现的子查询，也叫做派生表，其他数据库中可能叫<br>做内联视图或嵌套select。</p>
-<p>table ：显示这一行的数据是关于哪张表的。</p>
-<p>type ：显示连接使用了何种类型。从最好到最差的连接类型为const、<br>eq_ref、ref、range、index和ALL。</p>
-<p>const： 表示通过索引一次就找到了。</p>
-<p>eq_ref： 联表操作，外表的一条元组，内表只有唯一一条元组与之对应。</p>
-<p>ref：  联表操作，外表的一条元组，内表可有若干条元组与之对应。</p>
-<p>range： 表示这个连接类型使用索引返回一个范围中的行，比如使<br>用BETWEEN，IN，&gt;=，LIKE等查找东西时发生的情况。</p>
-<p>index：索引全表扫描，把索引从头到尾扫一遍。</p>
-<p>all： 表示为全表扫描； </p>
-<p>possible_keys：查询可能使用到的索引都会在这里列出来</p>
-<p>key :显示MySQL实际决定使用的键。如果没有索引被选择，键是NULL。<br>key=primary的话，表示使用了主键；<br>key=null表示没用到索引。    </p>
-<p>key_len:显示MySQL决定使用的键长度，表示索引中使用的字节数。</p>
-<p>ref ：如果是使用的常数等值查询，这里会显示const；如果是连<br>接查询，被驱动表的执行计划这里会显示驱动表的关联字段；如<br>果是条件使用了表达式或者函数，或者条件列发生了内部隐式转<br>换，这里可能显示为func。</p>
-<p>rows：这里是执行计划中估算的扫描行数，不是精确值    </p>
-<p>extra：关于MYSQL如何解析查询的额外信息。<br>这里可以看到的坏的例子是Using temporary和Using filesort，<br>意思MYSQL根本不能使用索引，结果是检索会很慢。</p>
-<p>这个列可以显示的信息非常多，有几十种，常用的有<br>A：distinct：在select部分使用了distinc关键字</p>
-<p>B：no tables used：不带from字句的查询或者From dual查询</p>
-<p>C：使用not in()形式子查询或not exists运算符的连接查询，<br>这种叫做反连接。即，一般连接查询是先查询内表，再查询外<br>表，反连接就是先查询外表，再查询内表。</p>
-<p>D：using filesort：排序时无法使用到索引时，就会出现这个。<br>常见于order by和group by语句中</p>
-<p>E：using index：查询时不需要回表查询，直接通过索引就可以<br>获取查询的数据。</p>
-<p>F：using join buffer（block nested loop），using join buffer<br>（batched key accss）：5.6.x之后的版本优化关联查询的BNL，BKA<br>特性。主要是减少内表的循环数量以及比较顺序地扫描查询。</p>
-<p>G：using sort_union，using_union，using intersect，<br>using sort_intersection：<br>using intersect：表示使用and的各个索引的条件时，该信息表示是<br>从处理结果获取交集<br>using union：表示使用or连接各个使用索引的条件时，该信息表示从<br>处理结果获取并集<br>using sort_union和using sort_intersection：与前面两个对应的类<br>似，只是他们是出现在用and和or查询信息量大时，先查询主键，然后<br>进行排序合并后，才能读取记录并返回。</p>
-<p>H：using temporary：表示使用了临时表存储中间结果。临时表可以是<br>内存临时表和磁盘临时表，执行计划中看不出来，需要查看status变量，<br>used_tmp_table，used_tmp_disk_table才能看出来。</p>
-<p>I：using where：表示存储引擎返回的记录并不是所有的都满足查询条<br>件，需要在server层进行过滤。查询条件中分为限制条件和检查条件，<br>5.6之前，存储引擎只能根据限制条件扫描数据并返回，然后server层根<br>据检查条件进行过滤再返回真正符合查询的数据。5.6.x之后支持ICP特<br>性，可以把检查条件也下推到存储引擎层，不符合检查条件和限制条件<br>的数据，直接不读取，这样就大大减少了存储引擎扫描的记录数量。<br>extra列显示using index condition</p>
-<p>J：firstmatch(tb_name)：5.6.x开始引入的优化子查询的新特性之一，<br>常见于where字句含有in()类型的子查询。如果内表的数据量比较大，<br>就可能出现这个</p>
-<p>K：loosescan(m..n)：5.6.x之后引入的优化子查询的新特性之一，在in()<br>类型的子查询中，子查询返回的可能有重复记录时，就可能出现这个</p>
-<p>除了这些之外，还有很多查询数据字典库，执行计划过程中就发现不可<br>能存在结果的一些提示信息</p>
-<p>11）filtered<br>使用explain extended时会出现这个列，5.7之后的版本默认就有这个<br>字段，不需要使用explain extended了。这个字段表示存储引擎返回的<br>数据在server层过滤后，剩下多少满足查询的记录数量的比例，注意是<br>百分比，不是具体记录数。</p>
+		  <p>0、缓存前言<br>在阅读mybatis源码之前,我们要做一些准备工作。<br>第一、良好的搜索工具google，我们要站在巨人的肩膀上，<br>不懂就google一下。<br>第二、一套mybatis的源码，当然你说我只下jar包也可以，<br>但这样看的费劲。一些变量会比如反编译成var1，a2这种模式。<br>第三、Myjj,最大的同性基友交流网站，最大的源码开源网站，<br>不过最近被微软收购了，果然是气大财粗。</p>
+<p>mybatis,version3.3.0的地址：<br><a href="https://github.com/tuguangquan/mybatis" target="_blank" rel="noopener">https://github.com/tuguangquan/mybatis</a><br>（有中文注释哟，当然我也不反对下官方的源码）</p>
+<p>官方的源码：<br><a href="https://github.com/mybatis/mybatis-3" target="_blank" rel="noopener">https://github.com/mybatis/mybatis-3</a></p>
+<p>别人搭好的mybatis maven项目demo：<br><a href="https://github.com/kailuncen/mybatis-cache-demo" target="_blank" rel="noopener">https://github.com/kailuncen/mybatis-cache-demo</a></p>
+<p>有了这些，还差一个老师：<br><a href="http://www.cnblogs.com/fangjian0423/p/mybatis-cache.html" target="_blank" rel="noopener">http://www.cnblogs.com/fangjian0423/p/mybatis-cache.html</a></p>
+<p>在mybatis的底层源码中，缓存其实就是对应java集合的Map。</p>
+<p>1、mybatis的缓存分类：<br>一级缓存，典型的如PerpetualCache这个类，而一级缓存的范围，<br>localCacheScope，其实就是是否开启一级缓存的意思。<br>而localCacheScope可选的有：<br>SESSION(默认)。<br>STATEMENT(如果本地会话只用于语句执行，<br>则不会在同一个SQL会话的两个不同调用之间共享数据。)<br><a id="more"></a><br>一般这么用：<br>在mybatis-config.xml中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">    &lt;settings&gt;</span><br><span class="line">        &lt;setting name=&quot;localCacheScope&quot; value=&quot;SESSION&quot;/&gt;</span><br><span class="line">    &lt;/settings&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure></p>
+<p>二级缓存：<br>一般这么用：<br>在mybatis-config.xml中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;configuration&gt;</span><br><span class="line">&lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;  //true表示开启二级缓存</span><br><span class="line">&lt;/configuration&gt;</span><br></pre></td></tr></table></figure></p>
+<p>本文就说下最简单的配置，在mapper文件上加上这句配置即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;cache/&gt;</span><br></pre></td></tr></table></figure></p>
+<p>二级缓存是跨session的，一级缓存是同一session内的<br>也就是说开启了二级缓存，查询如果一级缓存中没有，则会跨session去查找。</p>
+<p>2、mybatis的查询工作流程：<br>先查二级缓存，二级缓存没有则去查一级缓存，一级缓存没有才去数据库中查，<br>数据库查到了就put到一级缓存中，如果sqlSession调用了commit或者close方法，<br>就会调用TransactionalCacheManager的putObject方法put到二级缓存中。当然<br>前提还会有一些判断，如果是否开启了二级缓存或者说是一级缓存，缓存选择哪一<br>种类，比如一级缓存可以选SESSION（默认）或者STATEMENT，二级缓存可以最<br>近最少缓存（lrucache），或者是先进先出缓存（fifocache）等等，其实缓存在<br>java中使用或者说是接口的定义，就是一个Map，通过key查找，增加，和<br>删除，我们在使用redis或者是memcached等nosql的时候，思想类似。</p>
+<p>3、一级缓存，新增、更新、删除数据库中的某一记录时，一级缓存中如果<br>存在该记录也会被删除。</p>
+<p>4、Executor这个类，sql执行器，采用了装饰者设计模式，其实就是继承<br>嵌套。比如b extends a ,c extends b ,那么c就拥有b和a的功能或者说是方法。</p>
 
 		
 	  
@@ -246,7 +227,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">mybatis</a>
         		</li>
       		
 		</ul>
@@ -302,7 +283,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2018/04/24/mysql 执行计划/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2018/06/11/mybatis源码解析《一》-缓存/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -316,18 +297,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/04/25/工作中如何做好知识积累/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          工作中如何做好知识积累
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/04/22/mysql存储引擎的选择及使用场景/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">mysql存储引擎的选择及使用场景</div>
+    <a href="/2018/05/20/秒杀系统的设计与实践《一》/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">秒杀系统的设计与实践《一》</div>
       <i class="icon-circle-right"></i>
     </a>
   
