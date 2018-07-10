@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
-  <title>Tag: 订单 | Kevin Chow&#39;s blog</title>
+  <title>数据传输中的安全性的一点思考 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="坐最冷的板凳，得最难治的脊椎病。">
-<meta name="keywords" content="java;后台;直播">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Kevin Chow&#39;s blog">
-<meta property="og:url" content="https://ouzhrm.github.io/tags/订单/index.html">
+  <meta name="description" content="本次总结主要以技术为主，到了6月30号了，转眼间，收银台项目已经建立起来有两个多月了，从刚开始的我负责，到两个人负责，现在是4个人负责，建立起来了支付组。后边还得继续招小伙伴，很累，但也收获很多，现在收银台包含支付网关、券系统、账户系统、交易系统、收银台入口等多个模块，说白了，只要涉及到钱的功能，都得过我们这一边。废话不多说，技术撸上：">
+<meta name="keywords" content="安全">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据传输中的安全性的一点思考">
+<meta property="og:url" content="https://ouzhrm.github.io/2018/06/30/数据传输中的安全性的一点思考/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="坐最冷的板凳，得最难治的脊椎病。">
+<meta property="og:description" content="本次总结主要以技术为主，到了6月30号了，转眼间，收银台项目已经建立起来有两个多月了，从刚开始的我负责，到两个人负责，现在是4个人负责，建立起来了支付组。后边还得继续招小伙伴，很累，但也收获很多，现在收银台包含支付网关、券系统、账户系统、交易系统、收银台入口等多个模块，说白了，只要涉及到钱的功能，都得过我们这一边。废话不多说，技术撸上：">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-07-01T07:17:30.292Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kevin Chow&#39;s blog">
-<meta name="twitter:description" content="坐最冷的板凳，得最难治的脊椎病。">
+<meta name="twitter:title" content="数据传输中的安全性的一点思考">
+<meta name="twitter:description" content="本次总结主要以技术为主，到了6月30号了，转眼间，收银台项目已经建立起来有两个多月了，从刚开始的我负责，到两个人负责，现在是4个人负责，建立起来了支付组。后边还得继续招小伙伴，很累，但也收获很多，现在收银台包含支付网关、券系统、账户系统、交易系统、收银台入口等多个模块，说白了，只要涉及到钱的功能，都得过我们这一边。废话不多说，技术撸上：">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -146,72 +147,190 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-数据传输中的安全性的一点思考" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/05/20/秒杀系统的设计与实践《一》/" class="archive-article-date">
-  	<time datetime="2018-05-20T08:24:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/05/20/秒杀系统的设计与实践《一》/">秒杀系统的设计与实践《一》</a>
+    <h1 class="article-title" itemprop="name">
+      数据传输中的安全性的一点思考
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/06/30/数据传输中的安全性的一点思考/" class="archive-article-date">
+  	<time datetime="2018-06-30T04:20:55.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-06-30</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+		 
+		
+		
+		  <p>本次总结主要以技术为主，到了6月30号了，转眼间，收银台项目已经建立起来有两个多月了，<br>从刚开始的我负责，到两个人负责，现在是4个人负责，建立起来了支付组。后边还得继续<br>招小伙伴，很累，但也收获很多，现在收银台包含支付网关、券系统、账户系统、交易系统、<br>收银台入口等多个模块，说白了，只要涉及到钱的功能，都得过我们这一边。废话不多说，<br>技术撸上：<br><a id="more"></a><br>首先是安全性，收银台跟钱相关的，所以我们把安全性作为项目第一位考虑的，数据对内部<br>要防篡改，对外部数据传输要加密，为什么安全性排第一位呢？就是数据传输过程中，黑客把数据<br>拦截了下来，然后对数据进行一番改造，假设充值时，把0.1元字段改成10000元，黑客实际支付了<br>0.1元，然后在提现时就可能提出10000元来，当然这是简单的假设举例，而实际上提现更为复杂，<br>经过多重校验和多重审核。我们实现的是防篡改和防破解的思想是这样的：先用工具生成非对称性的<br>公私钥对，私钥加密，公钥解密，数据在网络传输前先用私钥加密，到达服务端时用公钥解密，而防<br>破解私钥，我们在数据的传输前加入一个随机数字段，这样保证每一次密文都是不一样的。但我们如<br>果供对内部的系统调用则主要是防篡改，干货来了：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br></pre></td><td class="code"><pre><span class="line">package com.carlife.common.sign.utils;</span><br><span class="line"></span><br><span class="line">import com.carlife.cashier.vo.CashierPrepayReq;</span><br><span class="line">import sun.misc.BASE64Decoder;</span><br><span class="line">import sun.misc.BASE64Encoder;</span><br><span class="line"></span><br><span class="line">import java.lang.reflect.Field;</span><br><span class="line">import java.security.*;</span><br><span class="line">import java.security.interfaces.DSAPrivateKey;</span><br><span class="line">import java.security.interfaces.DSAPublicKey;</span><br><span class="line">import java.security.spec.PKCS8EncodedKeySpec;</span><br><span class="line">import java.security.spec.X509EncodedKeySpec;</span><br><span class="line">import java.util.ArrayList;</span><br><span class="line">import java.util.Arrays;</span><br><span class="line">import java.util.HashMap;</span><br><span class="line">import java.util.Map;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * 签名验签算法:DSA</span><br><span class="line"> * 1、生成密钥对</span><br><span class="line"> * 2、签名</span><br><span class="line"> * 3、验签</span><br><span class="line"> */</span><br><span class="line">public class DSASignaureUtil &#123;</span><br><span class="line">    public static final String  Algorithm_DSA=&quot;DSA&quot;;</span><br><span class="line">    //默认密钥字节数</span><br><span class="line">    private static final int key_size=1024;</span><br><span class="line">    //默认种子</span><br><span class="line">    public static final String default_seed=&quot;0f22507a10bbddd07d8a3082122966e3&quot;;</span><br><span class="line"></span><br><span class="line">    public static final String public_key = &quot;DSAPublicKey&quot;;</span><br><span class="line">    public static final String private_key = &quot;DSAPrivateKey&quot;;</span><br><span class="line"></span><br><span class="line">    /***</span><br><span class="line">     * 生成密钥种子</span><br><span class="line">     * @param seed</span><br><span class="line">     * @return</span><br><span class="line">     * @throws Exception</span><br><span class="line">     */</span><br><span class="line">    public static Map initKey(String seed) throws Exception&#123;</span><br><span class="line">        KeyPairGenerator keygen = KeyPairGenerator.getInstance(Algorithm_DSA);</span><br><span class="line">        //　初始化随机产生器</span><br><span class="line">        SecureRandom secureRandom = new SecureRandom();</span><br><span class="line">        secureRandom.setSeed(seed.getBytes());</span><br><span class="line">        keygen.initialize(key_size,secureRandom);</span><br><span class="line">        KeyPair keys = keygen.genKeyPair();</span><br><span class="line">        DSAPublicKey publicKey = (DSAPublicKey) keys.getPublic();</span><br><span class="line">        DSAPrivateKey privateKey = (DSAPrivateKey) keys.getPrivate();</span><br><span class="line">        Map map = new HashMap(2);</span><br><span class="line">        map.put(public_key,publicKey);</span><br><span class="line">        map.put(private_key,privateKey);</span><br><span class="line"></span><br><span class="line">        return map;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">    * description: 加签名方法 &lt;p&gt;</span><br><span class="line">    * param: [data, private_key] &lt;p&gt;</span><br><span class="line">    * return: java.lang.String &lt;p&gt;</span><br><span class="line">    * author: shicong yang&lt;p&gt;</span><br><span class="line">    * date: 2018/6/28 &lt;p&gt;</span><br><span class="line">    */</span><br><span class="line">    public static String sign(Object data,String private_key)throws Exception&#123;</span><br><span class="line">       return  sign(getData(data),private_key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /***</span><br><span class="line">     * 用私钥对信息生成数字签名</span><br><span class="line">     * @param data 加密数据</span><br><span class="line">     * @param privateKey 私钥</span><br><span class="line">     * @return</span><br><span class="line">     * @throws Exception</span><br><span class="line">     */</span><br><span class="line">    public static String sign(byte[] data,String privateKey)throws Exception&#123;</span><br><span class="line">        //　解密由base64编码的私钥</span><br><span class="line">        byte[] keyBytes = decryptBASE64(privateKey);</span><br><span class="line">        //　构造PKCS8EncodedKeySpec对象</span><br><span class="line">        //PKCS#8:描述私有密钥信息格式，该信息包括公开密钥算法的私有密钥以及可选的属性集等[27]。</span><br><span class="line">        PKCS8EncodedKeySpec pkcs8KeySpec = new PKCS8EncodedKeySpec(keyBytes);</span><br><span class="line">        //　KEY_ALGORITHM　指定的加密算法</span><br><span class="line">        KeyFactory keyFactory = KeyFactory.getInstance(Algorithm_DSA);</span><br><span class="line">        //　取私钥匙对象</span><br><span class="line">        PrivateKey priKey = keyFactory.generatePrivate(pkcs8KeySpec);</span><br><span class="line">        //用私钥对信息生成数字签名</span><br><span class="line">        Signature signature = Signature.getInstance(keyFactory.getAlgorithm());</span><br><span class="line">        signature.initSign(priKey);</span><br><span class="line">        signature.update(data);</span><br><span class="line"></span><br><span class="line">        return encryptBASE64(signature.sign());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static boolean verify(Object data,String publicKey,String sign) throws Exception &#123;</span><br><span class="line">        return verify(getData(data),publicKey,sign);</span><br><span class="line">    &#125;</span><br><span class="line">    /***</span><br><span class="line">     * 校验数字签名</span><br><span class="line">     * @param data 加密数据</span><br><span class="line">     * @param publicKey 公钥</span><br><span class="line">     * @param sign 数据签名</span><br><span class="line">     * @return 校验成功返回true　失败返回false</span><br><span class="line">     * @throws Exception</span><br><span class="line">     */</span><br><span class="line">    public static boolean verify(byte[] data,String publicKey,String sign) throws Exception &#123;</span><br><span class="line">        // 　解密由base64编码的公钥</span><br><span class="line">        byte[] keyBytes = decryptBASE64(publicKey);</span><br><span class="line">        // 　构造X509EncodedKeySpec对象</span><br><span class="line">        X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);</span><br><span class="line">        // 　ALGORITHM　指定的加密算法</span><br><span class="line">        KeyFactory keyFactory = KeyFactory.getInstance(Algorithm_DSA);</span><br><span class="line">        // 　取公钥匙对象</span><br><span class="line">        PublicKey pubKey = keyFactory.generatePublic(keySpec);</span><br><span class="line">        Signature signature = Signature.getInstance(keyFactory.getAlgorithm());</span><br><span class="line">        signature.initVerify(pubKey);</span><br><span class="line">        signature.update(data);</span><br><span class="line">        // 　验证签名是否正常</span><br><span class="line">        return signature.verify(decryptBASE64(sign));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /***</span><br><span class="line">     * 默认生成密钥</span><br><span class="line">     * @return</span><br><span class="line">     * @throws Exception</span><br><span class="line">     */</span><br><span class="line">    public static Map initKey() throws Exception &#123;</span><br><span class="line">        return initKey(default_seed);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /***</span><br><span class="line">     * 取得私钥</span><br><span class="line">     * @param keyMap</span><br><span class="line">     * @return</span><br><span class="line">     * @throws Exception</span><br><span class="line">     */</span><br><span class="line">    public static String getPrivateKey(Map keyMap)throws Exception &#123;</span><br><span class="line">        Key key = (Key) keyMap.get(private_key);</span><br><span class="line">        return encryptBASE64(key.getEncoded());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /***</span><br><span class="line">     * 取得公钥</span><br><span class="line">     * @param keyMap</span><br><span class="line">     * @return</span><br><span class="line">     * @throws Exception</span><br><span class="line">     */</span><br><span class="line">    public static String getPublicKey(Map keyMap) throws Exception &#123;</span><br><span class="line">        Key key = (Key) keyMap.get(public_key);</span><br><span class="line">        return encryptBASE64(key.getEncoded());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * BASE64解密</span><br><span class="line">     *</span><br><span class="line">     * @param key</span><br><span class="line">     * @return</span><br><span class="line">     * @throws Exception</span><br><span class="line">     */</span><br><span class="line">    public static byte[] decryptBASE64(String key) throws Exception &#123;</span><br><span class="line">        return (new BASE64Decoder()).decodeBuffer(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * BASE64 加密</span><br><span class="line">     *</span><br><span class="line">     * @param key</span><br><span class="line">     * @return</span><br><span class="line">     * @throws Exception</span><br><span class="line">     */</span><br><span class="line">    public static String encryptBASE64(byte[] key) throws Exception &#123;</span><br><span class="line">        return (new BASE64Encoder()).encodeBuffer(key);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    private static byte[] getData(Object obj) throws IllegalAccessException &#123;</span><br><span class="line">        ArrayList&lt;String&gt; list = new ArrayList&lt;String&gt;();</span><br><span class="line">        //遍历本类</span><br><span class="line">        Class cls = obj.getClass();</span><br><span class="line">        Field[] fields = cls.getDeclaredFields();</span><br><span class="line">        for (Field f : fields) &#123;</span><br><span class="line">            f.setAccessible(true);</span><br><span class="line">            if (f.get(obj) != null &amp;&amp; f.get(obj) != &quot;&quot; &amp;&amp; !f.getName().equals(&quot;sign&quot;) &amp;&amp; !f.getName().equals(&quot;caller&quot;)) &#123;</span><br><span class="line">                list.add(f.getName() + &quot;=&quot; + f.get(obj) + &quot;&amp;&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        //遍历超类</span><br><span class="line">        Class superclass = cls.getSuperclass();</span><br><span class="line">        Field[] superclassfields = superclass.getDeclaredFields();</span><br><span class="line">        for (Field f : superclassfields) &#123;</span><br><span class="line">            f.setAccessible(true);</span><br><span class="line">            if (f.get(obj) != null &amp;&amp; f.get(obj) != &quot;&quot; &amp;&amp; !f.getName().equals(&quot;sign&quot;) &amp;&amp; !f.getName().equals(&quot;caller&quot;)) &#123;</span><br><span class="line">                list.add(f.getName() + &quot;=&quot; + f.get(obj) + &quot;&amp;&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        int size = list.size();</span><br><span class="line">        String[] arrayToSort = list.toArray(new String[size]);</span><br><span class="line">        Arrays.sort(arrayToSort, String.CASE_INSENSITIVE_ORDER);</span><br><span class="line">        StringBuilder sb = new StringBuilder();</span><br><span class="line">        for (int i = 0; i &lt; size; i++) &#123;</span><br><span class="line">            sb.append(arrayToSort[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        String result = sb.toString();</span><br><span class="line">        result = result.substring(0,result.length() -1);</span><br><span class="line">        System.err.println(result);</span><br><span class="line">        return result.getBytes();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static void main(String[] args) throws Exception&#123;</span><br><span class="line"></span><br><span class="line">        CashierPrepayReq obj = new CashierPrepayReq();</span><br><span class="line">        obj.setOrderNo(&quot;111111&quot;);</span><br><span class="line">        obj.setPayChannel(2);</span><br><span class="line">        obj.setProductLine(&quot;auto&quot;);</span><br><span class="line">        obj.setOrderBody(&quot;测试&quot;);</span><br><span class="line">        obj.setSubject(&quot;测试&quot;);</span><br><span class="line">        obj.setOrderOwnerUserId(&quot;999&quot;);</span><br><span class="line">        obj.setTotalFee(1L);</span><br><span class="line"></span><br><span class="line">        System.out.println(&quot;入参实体类:&quot;+obj.toString());</span><br><span class="line"></span><br><span class="line">        byte[] data = getData(obj);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        String inputStr = &quot;Hello,你好啊！&quot;;</span><br><span class="line">        //byte[] data = inputStr.getBytes();</span><br><span class="line">        // 构建密钥</span><br><span class="line">        Map&lt;String, Object&gt; keyMap = DSASignaureUtil.initKey();</span><br><span class="line">        // 获得密钥</span><br><span class="line">        String publicKey = DSASignaureUtil.getPublicKey(keyMap);</span><br><span class="line">        String privateKey = DSASignaureUtil.getPrivateKey(keyMap);</span><br><span class="line">        System.err.println(&quot;公钥:\r&quot; + publicKey);</span><br><span class="line">        System.err.println(&quot;私钥:\r&quot; + privateKey);</span><br><span class="line">        // 产生签名</span><br><span class="line">        String sign = DSASignaureUtil.sign(data, privateKey);</span><br><span class="line">        System.err.println(&quot;签名:\r&quot; + sign);</span><br><span class="line">        // 验证签名</span><br><span class="line">        boolean status = DSASignaureUtil.verify(data, publicKey, sign);</span><br><span class="line">        System.err.println(&quot;状态:\r&quot; + status);</span><br><span class="line">        if(status)&#123;</span><br><span class="line">            System.out.println(&quot;原文:&quot;+new String(data));</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以后，还要讨论收银台的稳定性（服务器宕机就没办法收钱？）、扩展性（需求如何快速加入？）、<br>统一性（收银台几个子系统操作步骤如何规划统一？）、高效性（用户体验？？）等等。</p>
+
+		
+	  
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>坚持原创技术分享，您的支持将鼓励我继续创作！<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/images/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/images/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">秒杀</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">并发</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">电商</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">订单</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">安全</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2018/06/30/数据传输中的安全性的一点思考/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2018/07/10/代码规范的一些总结/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          代码规范的一些总结
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2018/06/11/mybatis源码解析《一》-缓存/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mybatis源码解析《一》 - 缓存</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -234,9 +353,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
