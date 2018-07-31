@@ -6,20 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
-  <title>秒杀系统的设计与实践《一》 | Kevin Chow&#39;s blog</title>
+  <title>mybatis源码分析《二》 - 接口实现原理 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="秒杀系统的设计思路。 1、下单过程：校验库存更新库存创建订单支付（本文暂先不考虑）">
-<meta name="keywords" content="秒杀,并发,电商,订单">
+  <meta name="keywords" content="mybatis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="秒杀系统的设计与实践《一》">
-<meta property="og:url" content="https://ouzhrm.github.io/2018/05/20/秒杀系统的设计与实践《一》/index.html">
+<meta property="og:title" content="mybatis源码分析《二》 - 接口实现原理">
+<meta property="og:url" content="https://ouzhrm.github.io/2018/07/31/mybatis源码分析《二》-接口实现原理/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="秒杀系统的设计思路。 1、下单过程：校验库存更新库存创建订单支付（本文暂先不考虑）">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-20T08:40:06.401Z">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_01.png">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_02.png">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_03.png">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_04.png">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_05.png">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_06.png">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_07.png">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_08.png">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_09.png">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_10.png">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_11.png">
+<meta property="og:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_12.png">
+<meta property="og:updated_time" content="2018-07-31T12:38:13.257Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="秒杀系统的设计与实践《一》">
-<meta name="twitter:description" content="秒杀系统的设计思路。 1、下单过程：校验库存更新库存创建订单支付（本文暂先不考虑）">
+<meta name="twitter:title" content="mybatis源码分析《二》 - 接口实现原理">
+<meta name="twitter:image" content="https://ouzhrm.github.io/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_01.png">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -147,20 +157,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-秒杀系统的设计与实践《一》" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-mybatis源码分析《二》-接口实现原理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      秒杀系统的设计与实践《一》
+      mybatis源码分析《二》 - 接口实现原理
     </h1>
   
 
         
-        <a href="/2018/05/20/秒杀系统的设计与实践《一》/" class="archive-article-date">
-  	<time datetime="2018-05-20T08:24:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
+        <a href="/2018/07/31/mybatis源码分析《二》-接口实现原理/" class="archive-article-date">
+  	<time datetime="2018-07-31T12:34:37.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-31</time>
 </a>
         
       </header>
@@ -169,12 +179,8 @@
 		 
 		
 		
-		  <p>秒杀系统的设计思路。</p>
-<p>1、下单过程：<br>校验库存<br>更新库存<br>创建订单<br>支付（本文暂先不考虑）<br><a id="more"></a><br>2、表的概要设计<br>库存表：id、名称、库存数、已售数，版本号（防止超卖）。<br>订单表：id、订单名称、库存表id，订单创建时间。</p>
-<p>3、考虑到的问题。<br>首先，超卖问题，也就是说原来计划最大卖30个，结果卖了1000多个。<br>解决方法：采用乐观锁(CAS,比较并交换的意思，只有比较相等才能交换，否则不交换)。<br>更新库存的数据库语句可以这么设计，<br>update 库存表 set 版本号= 版本号+1,已售数 = 已售数+1<br>where 版本号 = 版本号 and id = 传过来的id<br>注：version_old_query是通过id查询出来的。</p>
-<p>其次，数据库宕机和系统报错（查询数据库因为版本号不对，更新库存失败导致的报错）的问题，<br>数据库宕机往往是连接数不够导致的宕机，毕竟并发数比较大。<br>解决方法：限流+缓存。本身redis有限流，快速失败返回的策略，也就是限制访问数，每次访问<br>数只能是固定的，如果访问不到，则直接返回，这个限流类似java的信号量这个类。通过和<br>springmvc集成即可，而采用先查缓存，缓存里如果没有则去查数据库，这样，通过redis限流<br>把大部分流量拦截在上游，使之不能到达数据库，缓存提高查询效率等。很好的解决了数据层的<br>访问问题了，但redis最好采用集群的模式，毕竟秒杀的访问量还是很大的，我认为redis的限流<br>措施往往起到的保护系统的作用，限流最好用nginx、springcloud或者dubbo横向扩展来实现。</p>
-<p>最后，如果进来到下单的并发量还是很大，可以将同步下单改成异步下单的形式。<br>解决方法：采用kafka发送库存的实体，然后马上返回，kafka和springboot集成的消费端，<br>采用线程池消费任务,对库存进行缓存和落地更新及创建订单，然后回调通知。</p>
-<p>—— 未完待续 ——</p>
+		  <a id="more"></a>
+<p><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_01.png" alt="图片不存在了，请联系博主更新图片"><br><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_02.png" alt="图片不存在了，请联系博主更新图片"><br><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_03.png" alt="图片不存在了，请联系博主更新图片"><br><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_04.png" alt="图片不存在了，请联系博主更新图片"><br><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_05.png" alt="图片不存在了，请联系博主更新图片"><br><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_06.png" alt="图片不存在了，请联系博主更新图片"><br><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_07.png" alt="图片不存在了，请联系博主更新图片"><br><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_08.png" alt="图片不存在了，请联系博主更新图片"><br><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_09.png" alt="图片不存在了，请联系博主更新图片"><br><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_10.png" alt="图片不存在了，请联系博主更新图片"><br><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_11.png" alt="图片不存在了，请联系博主更新图片"><br><img src="/images/mybatis_jiekou_shixianyuanli/mybatis_jiekou_12.png" alt="图片不存在了，请联系博主更新图片"></p>
 
 		
 	  
@@ -220,19 +226,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">秒杀</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">并发</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">电商</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">订单</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">mybatis</a>
         		</li>
       		
 		</ul>
@@ -288,7 +282,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2018/05/20/秒杀系统的设计与实践《一》/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2018/07/31/mybatis源码分析《二》-接口实现原理/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -302,18 +296,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/06/30/数据传输中的安全性的一点思考/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          数据传输中的安全性的一点思考
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/05/09/做收银台模块的经验总结/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">做收银台模块的经验总结</div>
+    <a href="/2018/07/24/mybatis源码分析《一》-整体结构/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mybatis源码分析《一》 - 整体结构</div>
       <i class="icon-circle-right"></i>
     </a>
   

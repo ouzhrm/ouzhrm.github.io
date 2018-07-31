@@ -6,20 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
-  <title>秒杀系统的设计与实践《一》 | Kevin Chow&#39;s blog</title>
+  <title>mybatis源码分析《一》 - 整体结构 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="秒杀系统的设计思路。 1、下单过程：校验库存更新库存创建订单支付（本文暂先不考虑）">
-<meta name="keywords" content="秒杀,并发,电商,订单">
+  <meta name="description" content="### 接口的使用 首先，咋们先说说接口的使用，mybatis提供的接口给我们操作数据库，有以下三种方式。">
+<meta name="keywords" content="mybatis">
 <meta property="og:type" content="article">
-<meta property="og:title" content="秒杀系统的设计与实践《一》">
-<meta property="og:url" content="https://ouzhrm.github.io/2018/05/20/秒杀系统的设计与实践《一》/index.html">
+<meta property="og:title" content="mybatis源码分析《一》 - 整体结构">
+<meta property="og:url" content="https://ouzhrm.github.io/2018/07/31/mybatis源码分析《二》 - 接口实现原理/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="秒杀系统的设计思路。 1、下单过程：校验库存更新库存创建订单支付（本文暂先不考虑）">
+<meta property="og:description" content="### 接口的使用 首先，咋们先说说接口的使用，mybatis提供的接口给我们操作数据库，有以下三种方式。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-20T08:40:06.401Z">
+<meta property="og:image" content="https://ouzhrm.github.io/2018/07/31/mybatis源码分析《二》%20-%20接口实现原理/media/fb16cff982b170820a101c8165f0644a.png">
+<meta property="og:updated_time" content="2018-07-31T12:13:12.041Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="秒杀系统的设计与实践《一》">
-<meta name="twitter:description" content="秒杀系统的设计思路。 1、下单过程：校验库存更新库存创建订单支付（本文暂先不考虑）">
+<meta name="twitter:title" content="mybatis源码分析《一》 - 整体结构">
+<meta name="twitter:description" content="### 接口的使用 首先，咋们先说说接口的使用，mybatis提供的接口给我们操作数据库，有以下三种方式。">
+<meta name="twitter:image" content="https://ouzhrm.github.io/2018/07/31/mybatis源码分析《二》%20-%20接口实现原理/media/fb16cff982b170820a101c8165f0644a.png">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -147,20 +149,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-秒杀系统的设计与实践《一》" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-mybatis源码分析《二》 - 接口实现原理" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      秒杀系统的设计与实践《一》
+      mybatis源码分析《一》 - 整体结构
     </h1>
   
 
         
-        <a href="/2018/05/20/秒杀系统的设计与实践《一》/" class="archive-article-date">
-  	<time datetime="2018-05-20T08:24:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-05-20</time>
+        <a href="/2018/07/31/mybatis源码分析《二》 - 接口实现原理/" class="archive-article-date">
+  	<time datetime="2018-07-31T12:13:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-31</time>
 </a>
         
       </header>
@@ -169,12 +171,315 @@
 		 
 		
 		
-		  <p>秒杀系统的设计思路。</p>
-<p>1、下单过程：<br>校验库存<br>更新库存<br>创建订单<br>支付（本文暂先不考虑）<br><a id="more"></a><br>2、表的概要设计<br>库存表：id、名称、库存数、已售数，版本号（防止超卖）。<br>订单表：id、订单名称、库存表id，订单创建时间。</p>
-<p>3、考虑到的问题。<br>首先，超卖问题，也就是说原来计划最大卖30个，结果卖了1000多个。<br>解决方法：采用乐观锁(CAS,比较并交换的意思，只有比较相等才能交换，否则不交换)。<br>更新库存的数据库语句可以这么设计，<br>update 库存表 set 版本号= 版本号+1,已售数 = 已售数+1<br>where 版本号 = 版本号 and id = 传过来的id<br>注：version_old_query是通过id查询出来的。</p>
-<p>其次，数据库宕机和系统报错（查询数据库因为版本号不对，更新库存失败导致的报错）的问题，<br>数据库宕机往往是连接数不够导致的宕机，毕竟并发数比较大。<br>解决方法：限流+缓存。本身redis有限流，快速失败返回的策略，也就是限制访问数，每次访问<br>数只能是固定的，如果访问不到，则直接返回，这个限流类似java的信号量这个类。通过和<br>springmvc集成即可，而采用先查缓存，缓存里如果没有则去查数据库，这样，通过redis限流<br>把大部分流量拦截在上游，使之不能到达数据库，缓存提高查询效率等。很好的解决了数据层的<br>访问问题了，但redis最好采用集群的模式，毕竟秒杀的访问量还是很大的，我认为redis的限流<br>措施往往起到的保护系统的作用，限流最好用nginx、springcloud或者dubbo横向扩展来实现。</p>
-<p>最后，如果进来到下单的并发量还是很大，可以将同步下单改成异步下单的形式。<br>解决方法：采用kafka发送库存的实体，然后马上返回，kafka和springboot集成的消费端，<br>采用线程池消费任务,对库存进行缓存和落地更新及创建订单，然后回调通知。</p>
-<p>—— 未完待续 ——</p>
+		  <p><strong>### 接口的使用</strong></p>
+<p>首先，咋们先说说接口的使用，mybatis提供的接口给我们操作数据库，有以下三种方式。<br><a id="more"></a><br><strong>第一种是通过传统的mybatis接口的形式</strong>，通过sqlSession对象来操作数据库。而我下面的第二种和第三种都是在它的基础上加一层封装，方便我们使用mybatis而已。下面比较典型的，比如：</p>
+<p>public \&lt;T> T selectOne(String statement, Object parameter)；</p>
+<p>public \&lt;K, V> Map\&lt;K, V> selectMap(String statement, String mapKey)；</p>
+<p>public \&lt;E> List\&lt;E> selectList(String statement, Object parameter) ；</p>
+<p>public void select(String statement, Object parameter, ResultHandler handler) ；</p>
+<p>public int insert(String statement, Object parameter)；</p>
+<p>public int update(String statement, Object parameter) ；</p>
+<p>public int delete(String statement, Object parameter)；</p>
+<p>具体用法我就不多说了，还不熟悉mybatis的同学，请先熟悉如何使用mybatis，带着疑问回头过来看效果会好一点。</p>
+<p><strong>第二种是通过java接口与xml文件映射的形式来实现</strong>。</p>
+<p>比如：</p>
+<p>xml部分代码：</p>
+<p>\&lt;mapper namespace=”mapper.StudentMapper”></p>
+<p>\&lt;select id=”getStudentById” parameterType=”int”<br>resultType=”entity.StudentEntity”></p>
+<p>SELECT id,name,age FROM student WHERE id = #{id}</p>
+<p>\&lt;/select></p>
+<p>\&lt;/mapper></p>
+<p>Java对应接口部分代码：</p>
+<p>public interface StudentMapper {<br>public StudentEntity getStudentById(int id);</p>
+<p>}</p>
+<p><strong>第三种是通过java接口注解sql语句的形式来实现</strong></p>
+<p>\@Mapper</p>
+<p>public interface TestDao {</p>
+<p>\@Select(“select id, name, name_pinyin from mm_test; “)</p>
+<p>List\&lt;MmTest> selectAll();</p>
+<p>\@Insert(“insert into mm_test(id, name) values(#{id}, #{name})”)</p>
+<p>public void insertUser(MmTest mmtTestS);</p>
+<p>}</p>
+<p><strong>### 接口底层分析</strong></p>
+<p>在分析之前，我们先有一套可运行的代码，我从网上找了一套，是我之前分析mybatis缓存的代码，地址是<a href="https://github.com/kailuncen/mybatis-cache-demo" target="_blank" rel="noopener">https://github.com/kailuncen/mybatis-cache-demo</a>，当然如果你不喜欢已经配好了，可以去mybatis官网看看相关的guide。我当初也是懒而已，所以当然就是在网上找一套啦。然后下载一下mybatis源码，方便我们debug的时候查看，我用的是idea开发工具，下载源码教程：<a href="https://yq.aliyun.com/articles/72776" target="_blank" rel="noopener">https://yq.aliyun.com/articles/72776</a>，我们知道，第二种和第三种最终在底层会调起第一种，在第一种的基础上进行了一次封装而已，所以我们在讲第二种和第三种的同时，会讲到第一种，那我们先从第二种和第三种开始分析。</p>
+<p>\@Test</p>
+<p>public void testMapper () throws Exception {</p>
+<p>SqlSessionFactoryBuilder factory = new SqlSessionFactoryBuilder();</p>
+<p><strong>//第一条代码</strong></p>
+<p>Reader resourceAsReader = Resources.getResourceAsReader(“mybatis-config.xml”);<br><strong>//第二条代码</strong></p>
+<p>factory.build(resourceAsReader);</p>
+<p><strong>//第三条代码</strong></p>
+<p>SqlSession sqlSession = factory.openSession(true); // 自动提交事务</p>
+<p><strong>//第四条代码</strong></p>
+<p>StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);</p>
+<p><strong>//第五条代码</strong></p>
+<p>System.out.println(studentMapper.getStudentById(13));</p>
+<p><strong>//第六条代码</strong></p>
+<p>sqlSession.close();</p>
+<p>}</p>
+<p><strong>mybatis-config.xml</strong>内容如下：</p>
+<p>\&lt;configuration></p>
+<p>\&lt;environments default=”development”></p>
+<p>\&lt;environment id=”development”></p>
+<p>\&lt;!–使用默认的JDBC事务管理–></p>
+<p>\&lt;transactionManager type=”JDBC”/></p>
+<p>\&lt;!–使用连接池–></p>
+<p>\&lt;dataSource type=”POOLED”></p>
+<p>\&lt;!–这里会替换为local-mysql.properties中的对应字段的值–></p>
+<p>\&lt;property name=”driver” value=”\${driver}”/></p>
+<p>\&lt;property name=”url” value=”\${url}”/></p>
+<p>\&lt;property name=”username” value=”\${username}”/></p>
+<p>\&lt;property name=”password” value=”\${password}”/></p>
+<p>\&lt;/dataSource></p>
+<p>\&lt;/environment></p>
+<p>\&lt;/environments></p>
+<p>\&lt;!–SQL映射文件–></p>
+<p>\&lt;mappers></p>
+<p>\&lt;mapper resource=”mapper/studentMapper.xml”/></p>
+<p>\&lt;/mappers></p>
+<p>\&lt;/configuration></p>
+<p>我们一条一条代码分析:</p>
+<p><strong>//第一条代码</strong></p>
+<p><strong>Reader resourceAsReader =<br>Resources.getResourceAsReader(“mybatis-config.xml”);</strong></p>
+<p>毫无疑问，这是通过IO去操作mybatis-config.xml文件，得到一个InputStream类型的对象，方便后面去读取文件里的数据解析xml文件。</p>
+<p>getResourceAsReader方法的实现</p>
+<p>public static Reader getResourceAsReader(String resource) throws IOException {</p>
+<p>InputStreamReader reader;</p>
+<p>if (charset == null) {</p>
+<p>reader = new InputStreamReader(getResourceAsStream(resource));</p>
+<p>} else {</p>
+<p>reader = new InputStreamReader(getResourceAsStream(resource), charset);</p>
+<p>}</p>
+<p>return reader;</p>
+<p>}</p>
+<p>Charset是不是为空，问题不大，只不过是不是按编码格式获取IO对象而已。</p>
+<p>其实说的很明显，把Resource转成Reader，我一步一步debug进去看的时候，没啥好看的，就是通过文件名获取对应文件的字节流通向字符流的“桥梁”，如果对InputStreamReader底层感兴趣，可以读读这个地址：<a href="http://tool.oschina.net/apidocs/apidoc?api=jdk-zh" target="_blank" rel="noopener">http://tool.oschina.net/apidocs/apidoc?api=jdk-zh</a></p>
+<p><strong>//第二条代码</strong></p>
+<p><strong>factory.build(resourceAsReader); //a, 点击跳转到下面的方法b</strong></p>
+<p>public SqlSessionFactory <strong>build(Reader reade</strong>r) { <strong>//b</strong></p>
+<p>return <strong>this.build((Reader)reader, (String)null, (Properties)null);<br>//跳转方法c</strong></p>
+<p>}</p>
+<p>public SqlSessionFactory <strong>build(Reader reader, String environment, Properties<br>properties)</strong> {<strong>//c</strong></p>
+<p>SqlSessionFactory var5;</p>
+<p>try {</p>
+<p><strong>XMLConfigBuilder parser = new XMLConfigBuilder(reader, environment,<br>properties);</strong></p>
+<p><strong>//关键在这一步，下面我会通过时序图1来分析parser.parse()这条语句</strong></p>
+<p><strong>var5 = this.build(parser.parse()); //点击build方法跳转到方法d</strong></p>
+<p>} catch (Exception var14) {</p>
+<p>throw ExceptionFactory.wrapException(“Error building SqlSession.”, var14);</p>
+<p>} finally {</p>
+<p>ErrorContext.instance().reset();</p>
+<p>try {</p>
+<p>reader.close();</p>
+<p>} catch (IOException var13) {</p>
+<p>}</p>
+<p>}</p>
+<p>return var5;</p>
+<p>}</p>
+<p>public SqlSessionFactory <strong>build(Configuration config)</strong> { <strong>//d</strong></p>
+<p>return new <strong>DefaultSqlSessionFactory(config)</strong>; <strong>//点击跳转到方法e</strong></p>
+<p>}</p>
+<p>public <strong>DefaultSqlSessionFactory(Configuration configuration)</strong> { <strong>//e</strong></p>
+<p>this.configuration = configuration;</p>
+<p>}</p>
+<p>从上面的代码我们可以发现，其实mybatis在操作数据库之前的准备工作，是解析mybatis的<br>xml配置文件，然后将数据设置到configuration对象中，放在DefaultSqlSessionFactory类中作为属性封装起来。</p>
+<p><strong>下面是时序图1（拉出来，放大看哈），记录了一下关键的代码，我会结合这个图来分析mybatis在操作数据库前做了什么准备工作。</strong></p>
+<p><strong>图片地址：</strong><a href="https://tiotn.cn/images/shixutu.png" target="_blank" rel="noopener">https://tiotn.cn/images/shixutu.png</a></p>
+<p><strong>备用：<a href="https://github.com/ouzhrm/ouzhrm.github.io/blob/master/images/shixutu.png" target="_blank" rel="noopener">https://github.com/ouzhrm/ouzhrm.github.io/blob/master/images/shixutu.png</a></strong></p>
+<p><img src="media/fb16cff982b170820a101c8165f0644a.png" alt=""></p>
+<p>步骤1，执行步骤2并将得到的configuration对象返回，意思就是解析mybatis-config.xml中带\&lt;configuration>标签的数据封装到configuration中。</p>
+<p>步骤2，这是解析mybatis配置文件（本文的mybatis-config.xml就是哈！）的方法，具体解析的标签有properties、settings、typeAliases、plugins、environments、databaseIdProvider、typeHandlers、mappers等。</p>
+<p>步骤3解析带mappers标签，通过resource属性上的路径值，找到相应的dao层对应的xml映射文件，也进行相应的解析，具体解析走步骤4。</p>
+<p>步骤4，包含两个重要的方法，configurationElement和bindMapperForNamespace方法。</p>
+<p>步骤5和步骤6，是解析mapper标签，通过IO的形式获取dao层对应的映射文件，然后解析增删改查标签下的数据，封装到MappedStatement对象中，MappedStatement对象封装了这个映射文件大量的属性数据，比如默认用到的是jdbc的PrepareStatement执行sql，sql语句封装在sqlsource中，其次，表的字段类型怎么解析成java数据类型的呢？是提前预先枚举，将表字段数据类型为key，java数据类型为value存到一个HashMap中，在得到结果集之后通过表字段类型就可以得到java对应的数据类型。封装完mappedStatement对象之后，调用MapperBuilderAssistant助手类的addMappedStatement方法，而这个方法里，configuration对象调用addMappedStatement方法，configuration对象的mappedStatements属性是一个HashMap，以名称空间+（select、insert、update、delete标签的）id为key，value为已封装完数据的mappedStatement对象。总结一下步骤5和6做了什么事情，就是<strong>通过解析映射文件的增删改查的标签，将解析的数据以名称空间+标签id为key，带解析数据的mappedStatement对象为value，封装到configuration对象的mappedStatements（HashMap）属性中。</strong></p>
+<p>步骤7、8、9、10，向configuration对象的knownMappers（其实就是一个HashMap）属性add若干条key(interface文件全限定名)，value(创建一个MapperProxyFactory映射代理工厂对象)映射对的记录。<em>后面讲getMapper方法的原理的时候，这个Mapper从哪里来的呢，就是在这里，操作数据库前准备工作添加进来的</em>。这个注册机mapperRegistry大概意思可以理解为“一回生，二回熟”的意思，就打比分说，我跟小商店的老板很熟，每次去都是买一包辣条，下次去的时候，他就会不由自主的递给你一包辣条。如果还不理解，后面会讲调接口方法底层原理会说到，不用着急。</p>
+<p>步骤11，12，13，14，是解析interface方法上的注解，也就是我们的<strong>第三种方式通过注解的形式配置并操作数据库的过程</strong>，解析完了之后，然后调用MapperBuilderAssistant助手类的addMappedStatement方法。把解析的数据设置进去。而这个方法里，configuration对象调用addMappedStatement方法，configuration对象的mappedStatements属性是一个HashMap，以名称空间（或者说全限定名）+select、insert、update、delete标签的id（方法名）为key，这个key也就是我们常说的statementid，value为已封装完数据的mappedStatement对象。注意，<strong>方法不能重载，因为statementId必须是唯一的</strong>。</p>
+<p>操作数据库前的准备工作到此分析结束了，里面还有有一些缓存、连接池、事务的相关知识，这里先不分析，后面讲到的时候再分析。总结一下，<strong>在真正操作数据库之前，或者说获取SqlSessionFactory对象时，先会解析mybatis的配置文件、映射文件（映射文件的数据add到一个map中），甚至会解析接口文件上方法的注解，并把相关的数据设置到configuration对象中，这个对象封装了很多属性，类似“集散地中心”。</strong></p>
+<p><strong>//第三条代码</strong></p>
+<p><strong>SqlSession sqlSession = factory.openSession(true);</strong></p>
+<p>点击openSession方法进去，打个断点，发现它是走DefaultSqlSessionFactory类的，进去的代码如下：</p>
+<p>\@Override</p>
+<p>public SqlSession openSession(boolean autoCommit) {</p>
+<p>return openSessionFromDataSource(configuration.getDefaultExecutorType(), null,<br>autoCommit);</p>
+<p>}</p>
+<p>是自动提交事务的，这一块我们先不管，继续进去：</p>
+<p>private SqlSession openSessionFromDataSource(ExecutorType execType,<br>TransactionIsolationLevel level, boolean autoCommit) {<br>Transaction tx = null;<br>try {<br>final Environment environment = configuration.getEnvironment();<br>final TransactionFactory transactionFactory =<br>getTransactionFactoryFromEnvironment(environment);<br>tx = transactionFactory.newTransaction(environment.getDataSource(), level,<br>autoCommit);<br>final Executor executor = configuration.newExecutor(tx, execType);<br><strong>return new DefaultSqlSession(configuration, executor, autoCommit);</strong><br>} catch (Exception e) {<br>closeTransaction(tx); // may have fetched a connection so lets call close()<br>throw ExceptionFactory.wrapException(“Error opening session. Cause: “ + e, e);<br>} finally {<br>ErrorContext.instance().reset();<br>}<br>}</p>
+<p>这一块DefaultSqlSession封装了全局配置configuration对象，sql执行器，事务是否自动提交，然后返回。这里不是重点，但是必须有个印象，知道这些参数是怎么来的。</p>
+<p><strong>//第四条代码</strong></p>
+<p><strong>StudentMapper studentMapper = sqlSession.getMapper(StudentMapper.class);</strong></p>
+<p>好了哈，下面是重点了，敲黑板三遍！！！</p>
+<p>\@Override</p>
+<p>public \&lt;T> T getMapper(Class\&lt;T> type) {</p>
+<p>return configuration.\&lt;T>getMapper(type, this);</p>
+<p>}</p>
+<p>public \&lt;T> T getMapper(Class\&lt;T> type, SqlSession sqlSession) {</p>
+<p>return mapperRegistry.getMapper(type, sqlSession);</p>
+<p>}</p>
+<p>这里从映射注册机上，根据xx.class获取一个映射对象。</p>
+<p>public \&lt;T> T getMapper(Class\&lt;T> type, SqlSession sqlSession) {</p>
+<p><strong>final MapperProxyFactory\&lt;T> mapperProxyFactory = (MapperProxyFactory\&lt;T>)<br>knownMappers.get(type);//d1</strong></p>
+<p>if (mapperProxyFactory == null) {</p>
+<p>throw new BindingException(“Type “ + type + “ is not known to the<br>MapperRegistry.”);</p>
+<p>}</p>
+<p>try {</p>
+<p><strong>return mapperProxyFactory.newInstance(sqlSession); //d2</strong></p>
+<p>} catch (Exception e) {</p>
+<p>throw new BindingException(“Error getting mapper instance. Cause: “ + e, e);</p>
+<p>}</p>
+<p>}</p>
+<p>d1语句是根据xx.class获取一个mapperProxyFactory对象。d1这条语句就能反映之前我们讨论的一回生两回熟，老板看见你就递给你一包辣条的那个问题。</p>
+<p>d2很明显，通过动态代理的反射机制来得到我们想要的那个操作数据库的代理对象。点击d2进去看看，它是具体怎么实现的？？</p>
+<p>public T newInstance(SqlSession sqlSession) {</p>
+<p>final MapperProxy\&lt;T> mapperProxy = new MapperProxy\&lt;T>(sqlSession,<br>mapperInterface, methodCache);</p>
+<p>return <strong>newInstance</strong>(mapperProxy);</p>
+<p>}</p>
+<p>protected T <strong>newInstance</strong>(MapperProxy\&lt;T> mapperProxy) {</p>
+<p>return (T) Proxy.<strong>newProxyInstance</strong>(mapperInterface.getClassLoader(), new<br>Class[] { mapperInterface }, mapperProxy);</p>
+<p>}</p>
+<p>public static Object <strong>newProxyInstance</strong>(ClassLoader loader,</p>
+<p>Class\&lt;?>[] interfaces,</p>
+<p>InvocationHandler h)</p>
+<p>throws IllegalArgumentException</p>
+<p>{</p>
+<p>Objects.requireNonNull(h);</p>
+<p>final Class\&lt;?>[] intfs = interfaces.clone();</p>
+<p>final SecurityManager sm = System.getSecurityManager();</p>
+<p>if (sm != null) {</p>
+<p>checkProxyAccess(Reflection.getCallerClass(), loader, intfs);</p>
+<p>}</p>
+<p><strong>Class\&lt;?> cl = getProxyClass0(loader, intfs);</strong></p>
+<p>try {</p>
+<p>if (sm != null) {</p>
+<p>checkNewProxyPermission(Reflection.getCallerClass(), cl);</p>
+<p>}</p>
+<p><strong>final Constructor\&lt;?> cons = cl.getConstructor(constructorParams);</strong></p>
+<p>final InvocationHandler ih = h;</p>
+<p>if (!Modifier.isPublic(cl.getModifiers())) {</p>
+<p>AccessController.doPrivileged(new PrivilegedAction\&lt;Void>() {</p>
+<p>public Void run() {</p>
+<p>cons.setAccessible(true);</p>
+<p>return null;</p>
+<p>}</p>
+<p>});</p>
+<p>}</p>
+<p>return <strong>cons.newInstance(new Object[]{h});</strong></p>
+<p>} catch (IllegalAccessException|InstantiationException e) {</p>
+<p>throw new InternalError(e.toString(), e);</p>
+<p>} catch (InvocationTargetException e) {</p>
+<p>Throwable t = e.getCause();</p>
+<p>if (t instanceof RuntimeException) {</p>
+<p>throw (RuntimeException) t;</p>
+<p>} else {</p>
+<p>throw new InternalError(t.toString(), t);</p>
+<p>}</p>
+<p>} catch (NoSuchMethodException e) {</p>
+<p>throw new InternalError(e.toString(), e);</p>
+<p>}</p>
+<p>}</p>
+<p><strong>根据获取这个操作数据库代理对象类，获取构造器然后通过反射获取对象，然后返回。（不懂jdk动态代理的亲们，先搜索学习一下，不然分析起来会比较模糊哈）</strong></p>
+<p><strong>//第五条代码</strong></p>
+<p><strong>System.out.println(studentMapper.getStudentById(13));</strong></p>
+<p>这个就尴尬了，没办法分析，因为无法点击进去分析了，大家认为它就是调本身的方法呀，但本身的方法是一个接口呀？？既然我们知道studentMapper对象是一个动态代理的对象，所有的方法调用都是要走它的invoke方法的，代理就是让别人打理，自己不用插手的意思嘛，好，又一个问题来了，这个invoke方法在哪找到呢？回到我们生成代理对象的生成那个地方，有个h参数传进来，没错的，这个h就是实现了InvocationHandler接口的代理类，返回去看代码，找到这个类</p>
+<p>public class MapperProxy\&lt;T> implements InvocationHandler, Serializable {</p>
+<p>\@Override</p>
+<p>public Object <strong>invoke</strong>(Object proxy, Method method, Object[] args) throws<br>Throwable {</p>
+<p>try {</p>
+<p>if (Object.class.equals(method.getDeclaringClass())) {</p>
+<p>return method.invoke(this, args);</p>
+<p>} else if (isDefaultMethod(method)) {</p>
+<p>return invokeDefaultMethod(proxy, method, args);</p>
+<p>}</p>
+<p>} catch (Throwable t) {</p>
+<p>throw ExceptionUtil.unwrapThrowable(t);</p>
+<p>}</p>
+<p>final MapperMethod mapperMethod = cachedMapperMethod(method);</p>
+<p>return <strong>mapperMethod.execute(sqlSession, args); //点进去，走e1</strong></p>
+<p>}</p>
+<p>private MapperMethod cachedMapperMethod(Method method) {</p>
+<p>MapperMethod mapperMethod = methodCache.get(method);</p>
+<p>if (mapperMethod == null) {</p>
+<p>mapperMethod = new MapperMethod(mapperInterface, method,<br>sqlSession.getConfiguration());</p>
+<p>methodCache.put(method, mapperMethod);</p>
+<p>}</p>
+<p>return mapperMethod;</p>
+<p>}</p>
+<p>}</p>
+<p><strong>//e1</strong></p>
+<p>public Object <strong>execute</strong>(SqlSession sqlSession, Object[] args) {</p>
+<p>Object result;</p>
+<p>switch (command.getType()) {</p>
+<p>case <strong>INSERT</strong>: {</p>
+<p>Object param = method.convertArgsToSqlCommandParam(args);</p>
+<p>result = rowCountResult(<strong>sqlSession.insert(command.getName(), param)</strong>);</p>
+<p>break;</p>
+<p>}</p>
+<p>…代码太多，这里就不多显示出来了。</p>
+<p>return result;</p>
+<p>}</p>
+<p>好了，最后还是走mybatis传统实现接口。也就是说，无论是通过接口方法注解sql的形式，还是在映射xml文件配sql的形式，最终都会走mybatis提供的传统接口。</p>
+<p>下面我们一起分析一下mybatis提供给我们的传统接口，也就是文章开始的第一种方式。</p>
+<p>\@Override</p>
+<p>public int <strong>insert</strong>(String statement, Object parameter) {</p>
+<p>return <strong>update</strong>(statement, parameter);</p>
+<p>}</p>
+<p>\@Override</p>
+<p>public int <strong>update</strong>(String statement) {</p>
+<p>return <strong>update</strong>(statement, null);</p>
+<p>}</p>
+<p>\@Override</p>
+<p>public int <strong>update</strong>(String statement, Object parameter) {</p>
+<p>try {</p>
+<p>dirty = true;</p>
+<p><strong>MappedStatement ms = configuration.getMappedStatement(statement);</strong></p>
+<p><strong>return executor.update(ms, wrapCollection(parameter))</strong>;</p>
+<p>} catch (Exception e) {</p>
+<p>throw ExceptionFactory.wrapException(“Error updating database. Cause: “ + e, e);</p>
+<p>} finally {</p>
+<p>ErrorContext.instance().reset();</p>
+<p>}</p>
+<p>}</p>
+<p>\@Override</p>
+<p>public int <strong>delete</strong>(String statement) {</p>
+<p><strong>return update(statement, null);</strong></p>
+<p>}</p>
+<p>无论新增接口还是删除接口，都是走更新接口，在mybatis里新增和删除都是被理解成更新。</p>
+<p>我们再仔细分析下这个更新接口。这个更新接口先是获取MappedStatement，也就是和映射文件数据封装类（我们常常说的映射文件就是如本文的studentMapper.xml哈），然后通过执行器做执行操作，那这个执行具体做了什么呢？我们点击进去看一下。</p>
+<p>\@Override</p>
+<p>public int update(MappedStatement ms, Object parameter) throws SQLException {</p>
+<p>ErrorContext.instance().resource(ms.getResource()).activity(“executing an<br>update”).object(ms.getId());</p>
+<p>if (closed) {</p>
+<p>throw new ExecutorException(“Executor was closed.”);</p>
+<p>}</p>
+<p>clearLocalCache();</p>
+<p>return <strong>doUpdate</strong>(ms,<br>parameter);//点进去继续走，选SimpleExecutor类，为什么选这个类后面分析执行器的时候再说。</p>
+<p>}</p>
+<p>\@Override</p>
+<p>public int doUpdate(MappedStatement ms, Object parameter) throws SQLException {</p>
+<p>Statement stmt = null;</p>
+<p>try {</p>
+<p>Configuration configuration = ms.getConfiguration();</p>
+<p>StatementHandler handler = configuration.newStatementHandler(this, ms,<br>parameter, RowBounds.DEFAULT, null, null);</p>
+<p>stmt = prepareStatement(handler, ms.getStatementLog());</p>
+<p>return <strong>handler.update(stmt);<br>//继续点进去，选PreparedStatementHandler类，为什么选这个类后面讲StatementHandler再说。</strong></p>
+<p>} finally {</p>
+<p>closeStatement(stmt);</p>
+<p>}</p>
+<p>}</p>
+<p>\@Override</p>
+<p>public int update(Statement statement) throws SQLException {</p>
+<p><strong>PreparedStatement ps = (PreparedStatement) statement;</strong></p>
+<p><strong>ps.execute();//到此结束了，如果jdbc不熟的同学，建议去看看jdbc相关的知识。</strong></p>
+<p>int rows = ps.getUpdateCount();</p>
+<p>Object parameterObject = boundSql.getParameterObject();</p>
+<p>KeyGenerator keyGenerator = mappedStatement.getKeyGenerator();</p>
+<p>keyGenerator.processAfter(executor, mappedStatement, ps, parameterObject);</p>
+<p>return rows;</p>
+<p>}</p>
+<p>mybatis接口工作原理总结</p>
+<p><strong>mybatis在操作数据库前</strong>，先做准备工作，具体有哪些工作呢？<strong>先将配置文件里的数据通过xml解析的形式封装到configuration全局配置类</strong>中。<strong>增删改查的接口注解或者映射文件xml的数据通过addMapper方法添加到MappedStatement对象中。Key是全限定名（类的全名）+方法名组成的statementId</strong>。</p>
+<p>mybatis操作数据库时，<strong>先通过jdk动态代理（反射）的方法，即通过代码constrution.newInstance()来获取接口代理对象</strong>。而接口代理对象调用方法时，会调用代理类的<strong>invoke方法</strong>，invoke方法会调用<strong>sqlsession里面增删改查方法</strong>，<strong>插入和删除方法都是走更新方法，更新方法具体是调用了jdbc的PrepareStatement的execute方法。</strong></p>
+<p>更精简的总结：</p>
+<p><strong>通过jdk动态代理反射生成代理对象，通过jdbc来操作数据库。</strong></p>
 
 		
 	  
@@ -220,19 +525,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">秒杀</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">并发</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">电商</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">订单</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">mybatis</a>
         		</li>
       		
 		</ul>
@@ -288,7 +581,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2018/05/20/秒杀系统的设计与实践《一》/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2018/07/31/mybatis源码分析《二》 - 接口实现原理/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -302,18 +595,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/06/30/数据传输中的安全性的一点思考/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          数据传输中的安全性的一点思考
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/05/09/做收银台模块的经验总结/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">做收银台模块的经验总结</div>
+    <a href="/2018/07/24/mybatis源码分析《一》-整体结构/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mybatis源码分析《一》 - 整体结构</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -435,15 +719,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+                <a href="javascript:void(0)" class="js-tag color1">mysql</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -451,11 +731,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">支付</a>
+                <a href="javascript:void(0)" class="js-tag color4">分布式</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">支付</a>
               </li>
              
               <li class="article-tag-list-item">
