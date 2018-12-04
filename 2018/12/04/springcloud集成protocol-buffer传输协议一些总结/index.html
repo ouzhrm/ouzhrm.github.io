@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
-  <title>Tag: 数据库 | Kevin Chow&#39;s blog</title>
+  <title>springcloud集成protocol buffer传输协议一些总结 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="坐最冷的板凳，得最难治的脊椎病。">
-<meta name="keywords" content="java;后台;直播">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Kevin Chow&#39;s blog">
-<meta property="og:url" content="https://ouzhrm.github.io/tags/数据库/index.html">
+  <meta name="description" content="protocol buffer是什么？protocol buffer是google定义的一种传输格式协议，类似json和xml，它的优势在于它的传输体积小，解析速度快，如果传输的数据特别大，它传输的速度及解析的速度是json和xml解析的指数级别。之前有记得看过一本书，是用Gzip压缩数据来传输，从而实现传输体积小的目的，但是它有一个缺点就是解压缩的时候特别耗计算机cpu性能。而protocol">
+<meta name="keywords" content="springcloud,protocol buffer,eureka">
+<meta property="og:type" content="article">
+<meta property="og:title" content="springcloud集成protocol buffer传输协议一些总结">
+<meta property="og:url" content="https://ouzhrm.github.io/2018/12/04/springcloud集成protocol-buffer传输协议一些总结/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="坐最冷的板凳，得最难治的脊椎病。">
+<meta property="og:description" content="protocol buffer是什么？protocol buffer是google定义的一种传输格式协议，类似json和xml，它的优势在于它的传输体积小，解析速度快，如果传输的数据特别大，它传输的速度及解析的速度是json和xml解析的指数级别。之前有记得看过一本书，是用Gzip压缩数据来传输，从而实现传输体积小的目的，但是它有一个缺点就是解压缩的时候特别耗计算机cpu性能。而protocol">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-04T14:29:40.897Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kevin Chow&#39;s blog">
-<meta name="twitter:description" content="坐最冷的板凳，得最难治的脊椎病。">
+<meta name="twitter:title" content="springcloud集成protocol buffer传输协议一些总结">
+<meta name="twitter:description" content="protocol buffer是什么？protocol buffer是google定义的一种传输格式协议，类似json和xml，它的优势在于它的传输体积小，解析速度快，如果传输的数据特别大，它传输的速度及解析的速度是json和xml解析的指数级别。之前有记得看过一本书，是用Gzip压缩数据来传输，从而实现传输体积小的目的，但是它有一个缺点就是解压缩的时候特别耗计算机cpu性能。而protocol">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -146,102 +147,201 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-springcloud集成protocol-buffer传输协议一些总结" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/19/mysql常用配置参数/" class="archive-article-date">
-  	<time datetime="2018-04-19T08:34:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-19</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/19/mysql常用配置参数/">mysql常用配置参数</a>
+    <h1 class="article-title" itemprop="name">
+      springcloud集成protocol buffer传输协议一些总结
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2018/12/04/springcloud集成protocol-buffer传输协议一些总结/" class="archive-article-date">
+  	<time datetime="2018-12-04T13:36:07.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-12-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+		 
+		
+		
+		  <p>protocol buffer是什么？<br>protocol buffer是google定义的一种传输格式协议，类似json和xml，它的<br>优势在于它的传输体积小，解析速度快，如果传输的数据特别大，它传输的<br>速度及解析的速度是json和xml解析的指数级别。之前有记得看过一本书，<br>是用Gzip压缩数据来传输，从而实现传输体积小的目的，但是它有一个缺点<br>就是解压缩的时候特别耗计算机cpu性能。而protocol buffer它是通过对对<br>象进行序列化和反序列化的。<br><a id="more"></a></p>
+<p>protocol buffer序列化和反序列化的原理？<br>本质还是对象与字节之间转换的传输，比如入参通过把字节转换成对象，<br>通过双方定义的格式，而出参是通过将对象转换成字节。也就是在网络中<br>传输还是通过字节的形式，可以想象一下字母转换成0101010001类似的格<br>式。笔者对四层tcp/ip网络协议，七层osi网络协议不是特别理解，大家<br>有特别懂的，私信我一下，万分感激。字节具体可以理解成二进制串。类似<br>映射键值对那种，中间加个长度。如k1-1-v1-k2-6-v2-…（这一块后面我再<br>仔细研究，深入它为什么解析速度会这么快的原理）</p>
+<p>springcloud是怎么集成protocol buffer的？（重点描述！！）<br>因为用spring全家桶的原因，eureka作为配置和注册发现中心，feign消费方<br>是怎么通过protobuf来调用生产方的呢？<br>1.下载protobuf<br><a href="https://github.com/google/protobuf/releases" target="_blank" rel="noopener">https://github.com/google/protobuf/releases</a><br>选择protoc-xxx-win32.zip下载<br>2.将解压出来的protoc.exe放在C:\Windows\System32目录下，<br>同时在windows环境变量中新建proto_path变量，值为C:\Windows\System32\protoc.exe的路径<br>3.在所使用的proto文件路径下打开cmd窗口执行以下命令<br>4.执行protoc –version命令检查是否安装成功<br>protoc –version<br>5.然后写proto文件，生成一个RetreatCouponReqConvert.proto文件<br>文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">syntax = &quot;proto2&quot;;</span><br><span class="line">package com.carlife.coupon.proto.model; //输出路径</span><br><span class="line">option java_outer_classname = &quot;RetreatCouponReqConvertModel&quot;;  //输出的类名</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">message RetreatCouponReqConvert&#123;</span><br><span class="line">    required string orderId = 1 ;</span><br><span class="line">    required string couponCode   = 2 ;</span><br><span class="line">    required string srcPartnerId   = 3 ;</span><br><span class="line">    required string sign   = 4 ;</span><br><span class="line">    required string caller   = 5 ;</span><br><span class="line">    required string noise   = 6 ;</span><br><span class="line">    required string reqId   = 7 ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个文件对应的java文件如：RetreatCouponReqConvert.java<br>内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">@Data</span><br><span class="line">public class RetreatCouponReqConvert extends BaseReq implements Serializable &#123;</span><br><span class="line"></span><br><span class="line">  private static final Long serialVersionUID = 5797586702757567145L;</span><br><span class="line"></span><br><span class="line">  @NotBlank</span><br><span class="line">  @ApiModelProperty(value = &quot;订单id&quot;,required = true)</span><br><span class="line">  private String orderId; // required</span><br><span class="line"></span><br><span class="line">  @NotBlank</span><br><span class="line">  @ApiModelProperty(value = &quot;券码&quot;,required = true)</span><br><span class="line">  private String couponCode; // required</span><br><span class="line"></span><br><span class="line">  @NotBlank</span><br><span class="line">  @ApiModelProperty(value = &quot;退款商户ID&quot;,required = true)</span><br><span class="line">  private String srcPartnerId;</span><br><span class="line">  </span><br><span class="line">   /**</span><br><span class="line">     * 签名</span><br><span class="line">     */</span><br><span class="line">    @ApiModelProperty(value = &quot;【必填】签名&quot;)</span><br><span class="line">    @NotBlank</span><br><span class="line">    private String sign;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 调用者，和签名一起传入，用于校验</span><br><span class="line">     */</span><br><span class="line">    @ApiModelProperty(value = &quot;【必填】调用者，和签名一起传入，用于校验&quot;)</span><br><span class="line">    @NotBlank</span><br><span class="line">    private String caller;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 随机数（例如 访问时间戳）</span><br><span class="line">     */</span><br><span class="line">    @ApiModelProperty(value = &quot;【必填】随机数（例如 访问时间戳）&quot;)</span><br><span class="line">    @NotBlank</span><br><span class="line">    private String noise;</span><br><span class="line"></span><br><span class="line">    /**</span><br><span class="line">     * 访问请求ID</span><br><span class="line">     */</span><br><span class="line">    @ApiModelProperty(value = &quot;【必填】访问请求ID&quot;)</span><br><span class="line">    @NotBlank</span><br><span class="line">    private String reqId;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后跑一下这个文件：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">package com.carlife.common.utils;</span><br><span class="line"></span><br><span class="line">import java.io.IOException;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * protoc.exe -I=proto的输入目录 --java_out=java类输出目录 proto的输入目录包括包括proto文件</span><br><span class="line"> * </span><br><span class="line"> * @author Administrator</span><br><span class="line"> *</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">public class GenerateClass &#123;</span><br><span class="line">	public static void main(String[] args) throws IOException &#123;</span><br><span class="line"></span><br><span class="line">		String protoFile = &quot;RetreatCouponReqConvert.proto&quot;;</span><br><span class="line">		String path = &quot;D:/cashier-master/cashier-master/cashier-sdk/src/main/java/com/carlife/coupon/proto&quot;;</span><br><span class="line">		String out =  &quot;D:/cashier-master/cashier-master/cashier-sdk/src/main/java&quot;;</span><br><span class="line">		String strCmd = &quot;C:/Windows/System32/protoc.exe -I=&quot; + path +</span><br><span class="line">				&quot; --java_out=&quot; + out + &quot; &quot; + path + &quot;/&quot; + protoFile;</span><br><span class="line">		System.out.println(strCmd);</span><br><span class="line">		Runtime.getRuntime().exec(strCmd);</span><br><span class="line">		System.out.println(&quot;完成&quot;);</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果RetreatCouponReqConvertModel.java没有生成，粘strCmd出来到git命令行窗口跑,找下原因</p>
+<p>依赖jar包<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.protobuf&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;protobuf-java&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.6.1&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.googlecode.protobuf-java-format&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;protobuf-java-format&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;1.4&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.protobuf&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;protobuf-java-util&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;3.6.1&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br><span class="line">&lt;dependency&gt;</span><br><span class="line">    &lt;groupId&gt;com.google.code.gson&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;gson&lt;/artifactId&gt;</span><br><span class="line">    &lt;version&gt;2.8.5&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<p>feign（调用者）端在启动如SpringApplication.java启动文件同级目录下增加以下配置文件</p>
+<p>内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">package com.carlife;</span><br><span class="line"></span><br><span class="line">import feign.codec.Decoder;</span><br><span class="line">import feign.codec.Encoder;</span><br><span class="line">import org.springframework.beans.factory.ObjectFactory;</span><br><span class="line">import org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line">import org.springframework.boot.autoconfigure.web.HttpMessageConverters;</span><br><span class="line">import org.springframework.cloud.netflix.feign.support.ResponseEntityDecoder;</span><br><span class="line">import org.springframework.cloud.netflix.feign.support.SpringDecoder;</span><br><span class="line">import org.springframework.cloud.netflix.feign.support.SpringEncoder;</span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.http.converter.protobuf.ProtobufHttpMessageConverter;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class ProtoFeignConfiguration &#123;</span><br><span class="line"></span><br><span class="line">    @Autowired</span><br><span class="line">    private ObjectFactory&lt;HttpMessageConverters&gt; messageConverters;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    ProtobufHttpMessageConverter protobufHttpMessageConverter() &#123;</span><br><span class="line">        return new ProtobufHttpMessageConverter();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Encoder springEncoder()&#123;</span><br><span class="line">        return new SpringEncoder(this.messageConverters);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    public Decoder springDecoder()&#123;</span><br><span class="line">        return new ResponseEntityDecoder(new SpringDecoder(this.messageConverters));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>生产者（被调用者）端同样在启动如SpringApplication.java启动文件同级目录下增加以下配置文件<br>内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">package com.carlife.coupon;</span><br><span class="line"></span><br><span class="line">import org.springframework.context.annotation.Bean;</span><br><span class="line">import org.springframework.context.annotation.Configuration;</span><br><span class="line">import org.springframework.http.converter.protobuf.ProtobufHttpMessageConverter;</span><br><span class="line"></span><br><span class="line">@Configuration</span><br><span class="line">public class ProtoBufServerConfig &#123;</span><br><span class="line"></span><br><span class="line">    @Bean</span><br><span class="line">    ProtobufHttpMessageConverter protobufHttpMessageConverter() &#123;</span><br><span class="line">        return new ProtobufHttpMessageConverter();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>最后一步，编写消费接口和生产接口<br>消费接口类似的内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(method = RequestMethod.POST, value = &quot;/retreatCouponPb&quot;, consumes = &quot;application/x-protobuf&quot;,produces=&quot;application/x-protobuf&quot;)</span><br><span class="line">RetreatCouponRspModel.RetreatCouponRsp retreatCouponPb(RetreatCouponReqConvertModel.RetreatCouponReqConvert req);</span><br></pre></td></tr></table></figure></p>
+<p>生产接口类似的内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@PostMapping(value = &quot;retreatCouponPb&quot;)</span><br><span class="line">@ResponseBody</span><br><span class="line">public RetreatCouponRspModel.RetreatCouponRsp retreatCouponPb(@RequestBody RetreatCouponReqConvertModel.RetreatCouponReqConvert req) &#123;</span><br><span class="line">	String couponCode = req.getCouponCode();</span><br><span class="line">	System.out.println(&quot;couponCode : &quot;+couponCode);</span><br><span class="line">	RetreatCouponRspModel.RetreatCouponRsp.Builder builder = RetreatCouponRspModel.RetreatCouponRsp.newBuilder();</span><br><span class="line">	builder.setMsg(&quot;-----OK----&quot;);</span><br><span class="line">	builder.setCode(RspMsgCodeEnum.SUCCESS.getValue());</span><br><span class="line">	return builder.build();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后用下面来调用消费接口即可，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">@PostMapping(value = &quot;testProto&quot;)</span><br><span class="line">public void testProto(@RequestBody RefundOrderReq refundOrderReq) &#123;</span><br><span class="line">	RetreatCouponReqConvertModel.RetreatCouponReqConvert build = RetreatCouponReqConvertModel.RetreatCouponReqConvert.newBuilder()</span><br><span class="line">			.setCaller(&quot;123&quot;).setCouponCode(&quot;888888888888888888&quot;)</span><br><span class="line">			.setNoise(&quot;123&quot;).setOrderId(&quot;123&quot;).setReqId(&quot;123&quot;)</span><br><span class="line">			.setSign(&quot;123&quot;).setSrcPartnerId(&quot;123&quot;).build();</span><br><span class="line">	RetreatCouponRspModel.RetreatCouponRsp retreatCouponRsp = couponProviderV2.retreatCouponPb(build);</span><br><span class="line">	System.out.println(&quot;code = &quot;+retreatCouponRsp.getCode()+&quot;msg = &quot;+retreatCouponRsp.getMsg());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>以上可能不是写的很详细，深感抱歉，但希望能帮助到有需要的人。</p>
+
+		
+	  
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>坚持原创技术分享，您的支持将鼓励我继续创作！<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/images/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/images/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">springcloud</a>
         		</li>
       		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">mysql</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">protocol buffer</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2018/04/19/数据库事务的四种隔离级别/" class="archive-article-date">
-  	<time datetime="2018-04-19T02:24:31.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/04/19/数据库事务的四种隔离级别/">数据库事务的四种隔离级别</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
+      		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">eureka</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2018/12/04/springcloud集成protocol-buffer传输协议一些总结/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2018/07/31/mybatis源码分析《二》-接口实现原理/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">mybatis源码分析《二》 - 接口实现原理</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -264,9 +364,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
