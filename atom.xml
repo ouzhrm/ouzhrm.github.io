@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ouzhrm.github.io/"/>
-  <updated>2018-12-04T14:29:40.897Z</updated>
+  <updated>2019-08-22T04:10:32.691Z</updated>
   <id>https://ouzhrm.github.io/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>学习一门技术的思路过程</title>
+    <link href="https://ouzhrm.github.io/2019/08/22/%E5%AD%A6%E4%B9%A0%E6%9F%90%E4%B8%80%E9%97%A8%E6%8A%80%E6%9C%AF%E7%9A%84%E6%80%9D%E8%B7%AF%E8%BF%87%E7%A8%8B/"/>
+    <id>https://ouzhrm.github.io/2019/08/22/学习某一门技术的思路过程/</id>
+    <published>2019-08-22T03:40:58.000Z</published>
+    <updated>2019-08-22T04:10:32.691Z</updated>
+    
+    <content type="html"><![CDATA[<p>在学习一门技术之前，<br>是不是应该思考这门技术对我们的项目有那些用处，<br>解决了那些痛点，如何系统的去学习这门技术？<br>好，废话不多说，聊聊我最近的一些思考！<br><a id="more"></a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">干货来了，可以按照下面的顺序问题去学习！</span><br><span class="line">1、为什么要用这门技术？之前的项目遇到过什么样的问题？</span><br><span class="line">2、这门技术相对于其他的同类技术，为什么选用这门技术？两者或者多者的比较？有哪些优缺点？</span><br><span class="line">    举例：</span><br><span class="line">如自身的相关数值：数据量、TPS、响应时间。</span><br><span class="line">缓存相关的有：本地缓存、分布式缓存（redis、mamcached）、客户端缓存、数据库缓存。</span><br><span class="line">选型指标：容量、并发量、响应时间、使用成本、扩展性、容灾。</span><br><span class="line">3、这门技术可以运用在什么场景上？</span><br><span class="line">4、如何运用这门技术？这门技术是怎么实现的？？</span><br><span class="line">5、如何保证高可用和一致性等等？</span><br><span class="line">6、用这门技术可能会有什么坑？亲身经历有什么坑？如何解决？？有没备选或者应急方案？？</span><br><span class="line">举例：</span><br><span class="line">https://github.com/aalansehaiyang/technology-talk/blob/master/system-architecture/architecture-experience.md</span><br><span class="line">（可以看看缓存那一块）</span><br><span class="line">7、利益化：面试时会问什么样的问题？（高级开发，架构师，cto不同的角色）</span><br><span class="line"></span><br><span class="line">参考示例文章如：https://data.qq.com/article?id=2879</span><br></pre></td></tr></table></figure></p><font color="#A52A2A" size="2"><br>思路决定出路，思想决定高度！<br>磨刀不误砍柴工！<br>高级开发看到技术，架构看到未来，cto看到价值！<br></font>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在学习一门技术之前，&lt;br&gt;是不是应该思考这门技术对我们的项目有那些用处，&lt;br&gt;解决了那些痛点，如何系统的去学习这门技术？&lt;br&gt;好，废话不多说，聊聊我最近的一些思考！&lt;br&gt;
+    
+    </summary>
+    
+      <category term="随笔" scheme="https://ouzhrm.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>springcloud集成protocol buffer传输协议一些总结</title>
@@ -290,9 +310,9 @@
     </summary>
     
     
-      <category term="数据库" scheme="https://ouzhrm.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
-    
       <category term="mysql" scheme="https://ouzhrm.github.io/tags/mysql/"/>
+    
+      <category term="数据库" scheme="https://ouzhrm.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
     
   </entry>
   
