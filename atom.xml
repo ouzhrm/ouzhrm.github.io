@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ouzhrm.github.io/"/>
-  <updated>2019-09-23T10:38:18.514Z</updated>
+  <updated>2019-11-14T05:44:57.454Z</updated>
   <id>https://ouzhrm.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>经验之谈-某个使用spring规范</title>
+    <link href="https://ouzhrm.github.io/2019/11/24/%E7%BB%8F%E9%AA%8C%E4%B9%8B%E8%B0%88-%E6%9F%90%E4%B8%AA%E4%BD%BF%E7%94%A8spring%E8%A7%84%E8%8C%83/"/>
+    <id>https://ouzhrm.github.io/2019/11/24/经验之谈-某个使用spring规范/</id>
+    <published>2019-11-24T05:27:41.000Z</published>
+    <updated>2019-11-14T05:44:57.454Z</updated>
+    
+    <content type="html"><![CDATA[<p>今天看下别的模块，虽然不是我写的代码，但是我还是看一下，以便全面了解。<br>如果认为写的不对的地方，我会根据git的提交记录找到对应的人提出自己的<br>建议。今天，我就看到一个spring关于共享变量的问题。在我们组<br>中，有个人特别喜欢用共享变量，其实这种用法是不对的。我们知道，spring管理<br>bean的方式是单例的,对象是存在堆内存中的。废话不多说，直接上代码！<br><a id="more"></a><br>比如说，service层某个实现类有个方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">boolean fullLoad = true;</span><br><span class="line">public void testFullload() throws InterruptedException &#123;</span><br><span class="line">    System.out.println(Thread.currentThread().getName()+&quot;: change=&quot;+fullLoad);</span><br><span class="line">    fullLoad = !fullLoad;</span><br><span class="line">    if(fullLoad)&#123;</span><br><span class="line">        Thread.sleep(2000);</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        Thread.sleep(5000);</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(Thread.currentThread().getName()+&quot;: get=&quot;+fullLoad);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>然后在controller层中调这个方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@RequestMapping(value = &#123; &quot;/ping&quot; &#125;, method = RequestMethod.GET)</span><br><span class="line">public ResponseEntity&lt;String&gt; ping() throws InterruptedException &#123;</span><br><span class="line">   xxxService.testFullload();</span><br><span class="line">   return new ResponseEntity&lt;&gt;(&quot;Success&quot;, HttpStatus.OK);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>请求几次后得到的结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">http-nio-9103-exec-8: change=true</span><br><span class="line">http-nio-9103-exec-8: get=false</span><br><span class="line">http-nio-9103-exec-1: change=false</span><br><span class="line">http-nio-9103-exec-1: get=true</span><br><span class="line">http-nio-9103-exec-5: change=true</span><br><span class="line">http-nio-9103-exec-5: get=false</span><br><span class="line">http-nio-9103-exec-2: change=false</span><br><span class="line">http-nio-9103-exec-2: get=true</span><br></pre></td></tr></table></figure></p><p>总结：这说明一个多线程的问题，spring 管理bean的方式<br>是单例的，对象不是放在线程内部独立的内存中的，而是<br>堆中共享的。使用共享变量特别需要注意，建议作为内部变量<br>放在方法中传递，而不是作为共享变量的形式传递，因为共享<br>变量在spring中会把值存储在堆内存中。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;今天看下别的模块，虽然不是我写的代码，但是我还是看一下，以便全面了解。&lt;br&gt;如果认为写的不对的地方，我会根据git的提交记录找到对应的人提出自己的&lt;br&gt;建议。今天，我就看到一个spring关于共享变量的问题。在我们组&lt;br&gt;中，有个人特别喜欢用共享变量，其实这种用法是不对的。我们知道，spring管理&lt;br&gt;bean的方式是单例的,对象是存在堆内存中的。废话不多说，直接上代码！&lt;br&gt;
+    
+    </summary>
+    
+      <category term="经验之谈" scheme="https://ouzhrm.github.io/categories/%E7%BB%8F%E9%AA%8C%E4%B9%8B%E8%B0%88/"/>
+    
+    
+      <category term="spring" scheme="https://ouzhrm.github.io/tags/spring/"/>
+    
+  </entry>
   
   <entry>
     <title>学习redis，读这一篇就够了？</title>
