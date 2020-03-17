@@ -6,19 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://ouzhrm.github.io">
-  <title>Archives: 2019/8 | Kevin Chow&#39;s blog</title>
+  <title>DDD思想认知与实践 | Kevin Chow&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="坐最冷的板凳，得最难治的脊椎病。">
-<meta name="keywords" content="java;后台;直播">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Kevin Chow&#39;s blog">
-<meta property="og:url" content="https://ouzhrm.github.io/archives/2019/08/index.html">
+  <meta name="description" content="本文以问题为导向，以某一个业务甚至多个业务为例，一步步解析DDD（即领域驱动设计，后文均简写成DDD）。业界有句话说，架构脱离业务就是耍流氓，同样，思想如果脱离实践，只谈理论，就是空谈。">
+<meta name="keywords" content="DDD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDD思想认知与实践">
+<meta property="og:url" content="https://ouzhrm.github.io/2020/03/17/DDD思想认知与实践/index.html">
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
-<meta property="og:description" content="坐最冷的板凳，得最难治的脊椎病。">
+<meta property="og:description" content="本文以问题为导向，以某一个业务甚至多个业务为例，一步步解析DDD（即领域驱动设计，后文均简写成DDD）。业界有句话说，架构脱离业务就是耍流氓，同样，思想如果脱离实践，只谈理论，就是空谈。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-17T01:53:38.778Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Kevin Chow&#39;s blog">
-<meta name="twitter:description" content="坐最冷的板凳，得最难治的脊椎病。">
+<meta name="twitter:title" content="DDD思想认知与实践">
+<meta name="twitter:description" content="本文以问题为导向，以某一个业务甚至多个业务为例，一步步解析DDD（即领域驱动设计，后文均简写成DDD）。业界有句话说，架构脱离业务就是耍流氓，同样，思想如果脱离实践，只谈理论，就是空谈。">
   
     <link rel="alternative" href="/atom.xml" title="Kevin Chow&#39;s blog" type="application/atom+xml">
   
@@ -146,60 +147,219 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-DDD思想认知与实践" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2019/08/22/学习某一门技术的思路过程/" class="archive-article-date">
-  	<time datetime="2019-08-22T03:40:58.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2019-08-22</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/08/22/学习某一门技术的思路过程/">学习一门技术的思路过程</a>
+    <h1 class="article-title" itemprop="name">
+      DDD思想认知与实践
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
+        
+        <a href="/2020/03/17/DDD思想认知与实践/" class="archive-article-date">
+  	<time datetime="2020-03-17T01:27:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+		 
+		
+		
+		  <p>本文以问题为导向，以某一个业务甚至多个业务为例，一步步解析DDD<br>（即领域驱动设计，后文均简写成DDD）。业界有句话说，架构脱离业<br>务就是耍流氓，同样，思想如果脱离实践，只谈理论，就是空谈。<br><a id="more"></a></p>
+<h4 id="我最近为什么要研究DDD？"><a href="#我最近为什么要研究DDD？" class="headerlink" title="我最近为什么要研究DDD？"></a>我最近为什么要研究DDD？</h4><p>最近公司要将一个项目重构，这个项目经过很多人的手，代码接近800M，<br>这个项目在全球有多个站点，这给我们带来了不少的困难，首先，相关<br>文档如数据库关系文档、概要和详细设计等文档缺失，其次，业务梳理<br>困难，可能一些细节会忽视，再框架层面是用SAP比较笨重的hybris框架，<br>怎么扩展，以及很好的使用这个框架，对应的文档也很少，这给我们开发<br>人员在快速响应需求，项目出现紧急bug上，在扩展和维护上带来很大的<br>挑战，以及遇到一些源码级别的坑会很影响效率，要找维护这个框架的公<br>司的人来解决，在当今，拥抱开源是趋势，最重要的是时间成本上，这个<br>项目的代码比较多，项目启动比较费时，重启的时间往往比更改很小的内<br>容所耗的时间要长的多得多，从而导致增加人手来维护这个平台，进而人<br>力成本上升。<br>对此，我们曾经提出以下几种解决策略：<br>1、尽可能的停止在就平台上面继续开发新需求，能迁移的就单独迁移出来<br>形成一个新的服务。<br>2、如果不能迁移出来，迁移困难，则将其封装成一个接口，形成所谓的胶水<br>代码，供新旧服务使用。<br>3、先迁移简单的，以及先迁移更有价值的，或者频繁维护的。<br>4、在准备迁移之前，先前后端分离。以及建立api网关及DNS。<br>5、采取灰度发布二八形式，20%的流量打到新服务，80%的流量打到旧服务，<br>如果新服务出现问题，及时回滚或者指向回旧服务。<br>6、数据迁移方面，分静态迁移和动态迁移，静态迁移就是直接导入导出的形<br>式。而动态迁移就是服务不停机，<br>关系型数据库直接通过搭建主备数据库双写的形式，缓存必要时可以丢失，<br>文件服务器直接共用。一般是在用户少使用的时候进行。<br>最后，在权衡用户，开发，测试，运营等成本得失后，如果重写的成本相对低，<br>就立马行动！如果我们没法控制住它，不如试法去打破它。重新根据旧项目<br>的功能去梳理，构建一个新的平台。业务复杂，功能未来多变，要求快速迭代，<br>并带有不确定性需求的大型项目这么一个场景，是比较适合用DDD去设计的。<br>这也是我研究DDD的原因的之一。</p>
+<h4 id="提出DDD是在什么背景下？"><a href="#提出DDD是在什么背景下？" class="headerlink" title="提出DDD是在什么背景下？"></a>提出DDD是在什么背景下？</h4><p>是一个老外，具体什么名字咋们不讲究，说他们从一个小的创业公司逐渐发展<br>壮大，结果技术无法跟上业务的脚步，代码结构混乱冗杂并且庞大，业务复杂，<br>严重影响开发维护效率，一来怕担心影响到用户的体验，二是公司人力少，不<br>敢多招人，目前人均工作量饱和，业务需求和维护量也多，只关注业务的发展，<br>对没有产生效益的工作不是特别在乎，所以这给重构的推动带来重重困难。</p>
+<h4 id="什么是DDD？"><a href="#什么是DDD？" class="headerlink" title="什么是DDD？"></a>什么是DDD？</h4><p>domain driver design , 简称DDD, 翻译过来叫领域驱动设计，也就是业务专家<br>跟程序员打交道时，以领域为界建模的方式，降低沟通成本，达到业务即设计，<br>设计即代码，代码即文档的一种暂且的相对来说的理想境界。</p>
+<p>领域：即业务是属于哪块，电商领域，保险领域，零售领域，又可细化分为子领<br>域。如电商下（订单交易领域、库存领域、会员领域、物流领域….）<br>领域专家：一般指熟悉对应领域的产品经理项目经理</p>
+<h4 id="有必要一定要推行DDD这种开发方式吗？为什么推荐发展快速且业务复杂的互联网企业要用DDD作为主导设计？使用DDD有什么好处与坏处？"><a href="#有必要一定要推行DDD这种开发方式吗？为什么推荐发展快速且业务复杂的互联网企业要用DDD作为主导设计？使用DDD有什么好处与坏处？" class="headerlink" title="有必要一定要推行DDD这种开发方式吗？为什么推荐发展快速且业务复杂的互联网企业要用DDD作为主导设计？使用DDD有什么好处与坏处？"></a>有必要一定要推行DDD这种开发方式吗？为什么推荐发展快速且业务复杂的互联网企业要用DDD作为主导设计？使用DDD有什么好处与坏处？</h4><p>不一定，如果你的项目未来业务不是特别复杂，相对于传统甚至走瀑布流的开发<br>管理方式，变更需求不强烈，不要求快速迭代，用户增长不高相对稳定的情况下，<br>不建议采用DDD这种建模方式或者说设计思想。如果是一家初创企业，未来用户会<br>快速增长，业务会越来越复杂，未来希望能降低重构所耗的时间成本及人力成本，<br>未来需求不确定，变更频繁，不知道未来是否会演变成微服务，如果会演变，微服<br>务拆多细，怎么拆的问题，我建议推行DDD这种开发方式，当然，还有我开头所说的，<br>业务复杂，功能点多且细，无法跟上开发文档的修改速度时，或者项目比较重或者比<br>较臃肿时，我建议重构后推行DDD这种开发方式。</p>
+<p>领域驱动设计主要优势：<br>1、业务导向。<br>2、业务逻辑内聚，应用边界清晰。<br>3、建立领域模型优先。<br>4、分析、设计、代码和数据有机结合。<br>5、代码即设计。<br>6、扩展性好。<br>数据驱动设计主要特点：<br>1、技术导向。<br>2、数据库优先。<br>3、代码不能反映业务和设计。<br>4、业务逻辑分散。<br>5、扩展性不好。</p>
+<p>领域驱动设计目的是让业务架构和系统架构形成绑定关系，当我们去响应业务变化调<br>整业务架构时，系统架构的改变也会随之发生。在领域驱动设计中业务架构的梳理和<br>系统架构的梳理是同步进行的，其结果是设计出的业务上下文和系统模块结构是绑定的。</p>
+<h4 id="什么时候要重构？"><a href="#什么时候要重构？" class="headerlink" title="什么时候要重构？"></a>什么时候要重构？</h4><p>什么时候都适合重构，哪怕一个小小的重构，但现实中，往往是难以维护甚至无法维护<br>时才去重构，或者是影响开发效率，扩展功能耗时太长其原因代码太笨重太复杂影响，<br>开发效率严重影响业务需求时，即时间成本太高时才去重构。</p>
+<h4 id="怎么运用领域驱动设计思想去做业务设计和开发？举例说明"><a href="#怎么运用领域驱动设计思想去做业务设计和开发？举例说明" class="headerlink" title="怎么运用领域驱动设计思想去做业务设计和开发？举例说明"></a>怎么运用领域驱动设计思想去做业务设计和开发？举例说明</h4><p>DDD 分层架构包括：展现层、应用层、领域层和基础层。</p>
+<p>展现层：可以理解成前端。</p>
+<p>应用层：可以理解成传统三层架构中的控制层，应用层还可进行安全认证、权限校<br>验、分布式和持久化事务控制等。</p>
+<p>领域层：它实现了全部业务逻辑并且通过各种校验手段保证业务正确性,通俗的说<br>就是按业务建模，校验函数也写在这一层。它包含业务所涉及的领域对象（实体、<br>值对象）、领域对象之间的关系。它负责表达业务概念、业务状态以及业务规则。</p>
+<p>基础设施层（infrastructure）：封装基础资源服务，为应用层和领域层提供基础<br>资源服务（如数据库、缓存、api网关等基础资源）</p>
+<p>接口返回值在Adapter层集合，类命名以Adapter结尾, 如CargoTrackingViewAdapter。<br>命令如更新，删除接口，入参写在web层，类命名以Command结尾，如UpdateXxxCommand。<br>interfaces层下有多个命名的业务动作，如取快递，送快递等，还有dto层（DTO相关类）、<br>assembler层（DTO 与领域对象domain之间的相互转换）。这些动作层下面有分逻辑处理<br>facade层和web层，web层下面有XxxController,XxxCommand, XxxAdapter，<br>此外还有工具层utils, 比如时间格式校验，时间转换等工具类。<br>还有配置层Config， 放相关的配置信息。</p>
+<p>业务开展步骤：<br>1、场景分析<br>场景分析是一个发散的过程。根据不同角色的可能经历的场景分析，<br>尽可能全面的梳理从前端操作到后端业务逻辑发生的所有操作、命令、领域事件以及外<br>部依赖关系等信息。<br>2、领域建模<br>领域建模是一个收敛的过程。这个收敛过程分三步：<br>第一步根据场景分析中的操作集合定义领域实体；<br>第二步根据领域实体业务关联性，定义聚合；<br>第三步根据业务及边界等因素，定义限界上下文。<br>3、微服务设计和拆分<br>理论上一个限界上下文可以设计为一个微服务，但还需要综合考虑多种外部因素，<br>如：领域单一性、性能差异、版本发布频率、团队沟通效率和技术异构等要素。<br>4、代码结构模型设计<br>即设计类及分层结构，并写上一部分代码如领域实体，领域之间的关系，接口名称及出入参等。<br>5、详细设计<br>详细设计主要结合具体的业务功能来开展，主要工作包括：系统界面、数据库表以及字<br>段、服务参数规约及功能等。<br>6、代码开发；软件开发人员只需要按照设计文档和功能要求，找到业务功能对应的代<br>码位置，完成代码开发和服务编排即可。<br>7、测试和发布<br>完成代码开发后，由开发人员编写单元测试用例，基于挡板模拟依赖对象完成跨服务的测试，<br>测试人员编写测试用例，运维人员编写自动化测试脚本。</p>
+<p>具体代码和详情介绍请看下面，这是我看到相对比较好的文章。<br>理论篇：<a href="https://www.infoq.cn/article/7QgXyp4Jh3-5Pk6LydWw" target="_blank" rel="noopener">https://www.infoq.cn/article/7QgXyp4Jh3-5Pk6LydWw</a><br>操作步骤篇：<a href="https://www.infoq.cn/article/s_LFUlU6ZQODd030RbH9" target="_blank" rel="noopener">https://www.infoq.cn/article/s_LFUlU6ZQODd030RbH9</a><br>代码篇：<a href="https://github.com/citerus/dddsample-core" target="_blank" rel="noopener">https://github.com/citerus/dddsample-core</a></p>
+<h4 id="转DDD需要多大的成本及资源投入？效率怎么样？有那些指标体现？有没有备选方案或折衷？"><a href="#转DDD需要多大的成本及资源投入？效率怎么样？有那些指标体现？有没有备选方案或折衷？" class="headerlink" title="转DDD需要多大的成本及资源投入？效率怎么样？有那些指标体现？有没有备选方案或折衷？"></a>转DDD需要多大的成本及资源投入？效率怎么样？有那些指标体现？有没有备选方案或折衷？</h4><p>人力成本：开发、测试、运营、运维等。</p>
+<p>时间成本：如果未来能节省时间成本，提高开发与维护效率，重构是不错的方案。</p>
+<p>重构前需提前和业务沟通！</p>
+<p>技术选型最好要成熟，一定要经历过生产级别验证过的。能用公司的基础服务就用基<br>础服务，能借鉴别的团队就借鉴别的团队！</p>
+<p>重构量化指标比如用户操作的响应时间缩短到 100 毫秒、单元测试的覆盖率达到 80%、<br>发现问题时长降低到 30 分钟以内等等，能让系统更加完善的都可以提出明确指标。</p>
+<p>性能指标：响应时间、超时率、错误率、资源占用率、运行周期、支持最大并发数。</p>
+<p>资源使用率：CPU占用率、内存使用率、磁盘I/O、网络I/O。</p>
+<p>错误率：返回的状态码如404，500等所占请求总数的比率。</p>
+<p>衡量架构复杂度的几个指标：<br>depth（深度，从 nginx 开始到最深路径上的微服务个数），<br>fan-in（入度，一个服务被几个服务调用），<br>fan-out（出度，一个微服务调用了几个微服务）。<br>你应该尽力降低架构深度和出度，提升服务的入度。</p>
+<p>良好的单元测试不但是重构的先决条件和好帮手，而且能帮我们整理设计的思路，从而<br>更好的写出优秀的代码。因为在写单元测试的时候，我们会假设自己是一个“代码破坏<br>者”，思考如何破坏代码的运行、寻找那些可能出错的边界条件。单元测试的编写和运<br>行可以在写完代码后进行，也可以在写代码之前动手。先写单元测试再写代码的技巧<br>叫作测试驱动开发（TDD），也是敏捷开发的基石之一。</p>
+<h4 id="数据平滑迁移方案"><a href="#数据平滑迁移方案" class="headerlink" title="数据平滑迁移方案"></a>数据平滑迁移方案</h4><p>1、分可停机和不可停机，可停机直接导入导出，静态迁移，不可停机找用户少使用<br>时，数据库双写、定时任务load相对不太实时的数据、读取操作数据库日志变更的形式。<br>2、分数据类型，关系型数据库直接导入导出，或者双写的形式。缓存数据大部分是<br>经常访问或者处理过的数据，必要时可丢失。文件数据则共用的形式。<br>3、分业务需求，变更表结构，如拆表；变更存储介质，如mysql的数据迁移到mongodb<br>中；两者都可以开发个小工具处理。而分库个数追加，则只需更改库路由配置。<br>4、迁移完后还需进行缓存预热或者开发一个小工具进行新旧数据比对，保证数据一致。</p>
+<h4 id="服务迁移方案"><a href="#服务迁移方案" class="headerlink" title="服务迁移方案"></a>服务迁移方案</h4><p>1、灰度发布，二八流量原则，20%的流量打到新服务，80%的流量打到新服务，如果出<br>现问题，及时切回旧服务。<br>2、全量发布，在不影响旧业务的情况下，如抽取封装成一个子服务，测试在预发布环<br>境也没问题，可全量发布，这种情况较少。</p>
+
+		
+	  
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>坚持原创技术分享，您的支持将鼓励我继续创作！<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/images/alipay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/images/wechat.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">DDD</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/随笔//" class="article-tag-list-link color3">随笔</a>
+        			<a href="/categories/重构//" class="article-tag-list-link color3">重构</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=https://ouzhrm.github.io/2020/03/17/DDD思想认知与实践/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2019/11/24/经验之谈-某个使用spring规范/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">经验之谈-某个使用spring规范</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -222,8 +382,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
