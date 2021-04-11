@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://ouzhrm.github.io/"/>
-  <updated>2021-04-11T04:19:32.943Z</updated>
+  <updated>2021-04-11T13:30:06.801Z</updated>
   <id>https://ouzhrm.github.io/</id>
   
   <author>
@@ -17,11 +17,33 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>基础结构部门elasticsearch使用经验研究</title>
+    <title>系统性能优化</title>
+    <link href="https://ouzhrm.github.io/2021/01/20/%E6%8E%A5%E5%8F%A3%E4%BC%98%E5%8C%96%E6%80%BB%E7%BB%93/"/>
+    <id>https://ouzhrm.github.io/2021/01/20/接口优化总结/</id>
+    <published>2021-01-20T15:16:39.000Z</published>
+    <updated>2021-04-11T13:30:06.801Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="经历"><a href="#经历" class="headerlink" title="经历"></a>经历</h4><p>从刚参加工作到现在满打满算，有快4年时间了，期间优化过大大小小的服务，<br>2C2B的都有，基本上2C会严格些，因为它是面向用户的，用户体验好不好也直接<br>影响到用户的流失以及购买意愿等问题，响应时间尽可能在毫秒级，最慢不要超过<br>2秒，特别是核心的服务。2B的话只要不是特别慢，3到5秒都是可以容忍的,前提是<br>公司内部用户,对性能要求不是很高的受众。<br><a id="more"></a><br>    下面直接说思路,我们知道外网的请求通过网络, 先是走DNS服务器将域名解析成IP,<br>然后请求连接,tcp三次握手,将数据分组发送到对应的服务器上,然后服务器对根据<br>数据包的序号重组成完整的数据,期间数据包经过交换机,多个路由器转发,链路成解<br>析成帧单位的数据物理层解析成bit单位的数据,再经过交换机,最后到达服务器端,<br>服务器端通过进程的调度,处理完逻辑后, 原路返回给用户端.所以如果某个请求响应<br>很慢,那么需要在这些环节上拆解问题, ping 域名返回的时间,能知道网络时间,基本上<br>都是100ms以内,普遍5到50ms不等. 我的经验上看基本上不是网络的问题, 当然如果内<br>网有墙的情况下.</p><h4 id="网络和机器层面"><a href="#网络和机器层面" class="headerlink" title="网络和机器层面"></a>网络和机器层面</h4><pre><code>其次外网进内网会经过咋们自己实现的服务网关, 服务网关主要是监控流量,黑白名单,</code></pre><p>熔断限流鉴权转发等, 内网会对网关会有一个专门的心跳监测, 定时请求从网关到各个服务<br>的请求监测,如果不通会自动邮件告警, 微信告警.还有对机器的监测告警,CPU,内存,网络,硬盘<br>等,超过一定阈值会自动水平扩容和告警.</p><h4 id="代码逻辑层面"><a href="#代码逻辑层面" class="headerlink" title="代码逻辑层面"></a>代码逻辑层面</h4><p>服务通过切面（动态代理）记录耗时日志，如果2C接口超过1s，会发日志告警邮件，接口性能优<br>化，可通过批量、多线程、异步策略来优化。<br>    1、批量，即批量请求数据库或者缓存，减少在网络上浪费的时间，经验上看，很多同学会在<br>for循环上单个请求数据库或者缓存，别小看for循环，尽管单个请求数据库或者缓存是50毫秒，<br>那么50个item，就是2.5s，还没算其他逻辑或者其他请求链路上的时间，如果批量获取数据，<br>然后再处理，时间是90ms,那么节省了将近2.5s, 性能提升很明显。这也是我优化过接口很常见<br>的场景。<br>    2、多线程，如果主线程处理时间确实很长，可以通过多线程的方式并发处理，注意，如果使<br>用多线程，则注意线程安全（适当使用原子类）和CPU核数适当给大一些。多线程可以用jdk1.8最<br>新的parallelStream流，代码数比ThreadExecutor远远要小，内部原理采用fork/join窃取算法。<br>    3、异步，如果只能用主线程，不可以用多线程这样的场景，逻辑特别复杂冗长，我们可以<br>拆分成多个接口或者采用异步的处理手段，异步是将不是特别紧要的功能通过本地队列或者第<br>三方队列的形式实现解耦，实现快速响应返回。比如落库，订阅通知等等，如紧要的功能是访<br>问缓存获得，所以只需更新缓存，然后发消息去更新数据库和订阅通知。少了更新数据库和订<br>阅通知逻辑处理，大大提高了接口的吞吐量。<br>    4、此外，还有很多策略，用的比较少的，包括减少for循环，减少条件判断，运维层面的<br>sql调优，慢查询explain,比较复杂的垂直水平分库分表（涉及到数据迁移等操作，比较繁琐而<br>且风险比较大），读写分离，连接池数调优，加缓存（本地缓存、nosql，效果明显）,JVM调优<br>（这个我接触的少，主要是处理果full gc一些故障，可以用jmap命令和MAT插件定位对象）等等，<br>关键是找到瓶颈，定位到问题，对症下药，犹如木桶短板理论，木桶能装多少水，取决于最短的<br>那块木板。<br>    5、备选短期方案，弹性容器自动扩容。但长期成本过高。</p><h4 id="优化流程"><a href="#优化流程" class="headerlink" title="优化流程"></a>优化流程</h4><p>1、先让测试人员对接口进行压测，得到旧接口的压测报告和返回数据。<br>2、开发人员优化接口，让测试人员对优化后的新接口重新压测和比较新旧数据的准确性，回归<br>原有自动化测试用例，集成测试、功能测试。<br>3、部署方案，如果出现问题，紧急回滚到上一版。如果出问题需要最快止损，可以通过配置中心<br>配置对新旧代码实现快速切换。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h4 id=&quot;经历&quot;&gt;&lt;a href=&quot;#经历&quot; class=&quot;headerlink&quot; title=&quot;经历&quot;&gt;&lt;/a&gt;经历&lt;/h4&gt;&lt;p&gt;从刚参加工作到现在满打满算，有快4年时间了，期间优化过大大小小的服务，&lt;br&gt;2C2B的都有，基本上2C会严格些，因为它是面向用户的，用户体验好不好也直接&lt;br&gt;影响到用户的流失以及购买意愿等问题，响应时间尽可能在毫秒级，最慢不要超过&lt;br&gt;2秒，特别是核心的服务。2B的话只要不是特别慢，3到5秒都是可以容忍的,前提是&lt;br&gt;公司内部用户,对性能要求不是很高的受众。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="系统性能" scheme="https://ouzhrm.github.io/categories/%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD/"/>
+    
+    
+      <category term="优化" scheme="https://ouzhrm.github.io/tags/%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基础架构部门elasticsearch使用经验研究</title>
     <link href="https://ouzhrm.github.io/2020/12/25/%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%E9%83%A8%E9%97%A8elasticsearch%E4%BD%BF%E7%94%A8%E7%BB%8F%E9%AA%8C%E7%A0%94%E7%A9%B6/"/>
     <id>https://ouzhrm.github.io/2020/12/25/基础架构部门elasticsearch使用经验研究/</id>
     <published>2020-12-25T11:45:55.000Z</published>
-    <updated>2021-04-11T04:19:32.943Z</updated>
+    <updated>2021-04-11T08:43:49.957Z</updated>
     
     <content type="html"><![CDATA[<h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p>对elasticsearch封装成一个服务opensearch平台，实现其他部门搜索功能的快速接入能力。<br><a id="more"></a></p><h4 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h4><p>站内搜索（订单、帖子、门店、产品、物流）、日志、系统调用链</p><h4 id="配置、生产数据"><a href="#配置、生产数据" class="headerlink" title="配置、生产数据"></a>配置、生产数据</h4><p>订单优惠券（16C 、32G 、3Node 、500G+数据、 1w+QPS、 RT &lt; 100ms，写入查询要求高<br>商品论坛（8C、16G、3Node、20G+数据、8k+QPS、RT &lt; 30ms）, 查询要求高<br>日志（16C 、32G 、32Node、日均60TB数据，RT秒级）、写入要求高 </p><h4 id="已有功能"><a href="#已有功能" class="headerlink" title="已有功能"></a>已有功能</h4><p>admin后台（分类管理、过滤标签管理、索引管理、定时mysql同步、词典&amp;同义<br>词管理、黑白名单）、下拉推荐词、异地容灾、系统监控</p><h4 id="高可用"><a href="#高可用" class="headerlink" title="高可用"></a>高可用</h4><p>双写+快照，双写保证实时性，快照保证最终一致性。</p><h4 id="优化案例"><a href="#优化案例" class="headerlink" title="优化案例"></a>优化案例</h4><p>深度分页、cpu内存增高、用scroll解决 、_id以分类作前辍容易造成hash冲突<br>导致分片不均，解决方式为_id随机生成，更新删除由业务Id作条件删除。</p><h4 id="电商搜索领域重点关注"><a href="#电商搜索领域重点关注" class="headerlink" title="电商搜索领域重点关注"></a>电商搜索领域重点关注</h4><p>不能丢品，性能高，召回、准确率高</p><h4 id="目前功能"><a href="#目前功能" class="headerlink" title="目前功能"></a>目前功能</h4><p>仅实现布尔模型、空间向量模型，成本收益考虑，不实现NLP等高级功能。</p>]]></content>
     
@@ -31,7 +53,7 @@
     
     </summary>
     
-      <category term="elasticsearch" scheme="https://ouzhrm.github.io/categories/elasticsearch/"/>
+      <category term="搜索" scheme="https://ouzhrm.github.io/categories/%E6%90%9C%E7%B4%A2/"/>
     
     
       <category term="elasticsearch" scheme="https://ouzhrm.github.io/tags/elasticsearch/"/>
@@ -43,7 +65,7 @@
     <link href="https://ouzhrm.github.io/2020/12/12/elasticsearch%E4%B8%9A%E7%95%8C%E4%BD%BF%E7%94%A8%E7%BB%8F%E9%AA%8C%E7%A0%94%E7%A9%B6/"/>
     <id>https://ouzhrm.github.io/2020/12/12/elasticsearch业界使用经验研究/</id>
     <published>2020-12-12T15:12:45.000Z</published>
-    <updated>2021-04-11T04:11:17.043Z</updated>
+    <updated>2021-04-11T08:44:06.604Z</updated>
     
     <content type="html"><![CDATA[<h4 id="去哪儿"><a href="#去哪儿" class="headerlink" title="去哪儿"></a>去哪儿</h4><p>docker+k8s部署elasticsearch, 设定慢日志记录，<br>节点划分（data, master, hot, warm这些），分片数副本数<br>设定， opensearch系统的自助配置，监控和报警，监控数据汇总<br>审计日志，错误日志，访问日志。<br>PB级数据量写入和查询<br>使用场景：附近的人（GPS）, 报表，监控统计，物/车联网传感器数据，<br>日志实时分析，站内搜索（订单，产品，文档），<br>定期force merge (segment 是jvm消耗的主要者)<br><a id="more"></a></p><h4 id="腾讯云"><a href="#腾讯云" class="headerlink" title="腾讯云"></a>腾讯云</h4><p>考虑问题：成本，可用性，性能。<br>可用性挑战：大查询，瞬间性的压力过载，数据损坏，master堵塞<br>成本挑战：定时关闭历史索引，磁盘利用率低<br>性能挑战：<br>写入： bulk ,  多线程， 自带主键（_id）性能衰退1倍<br>查询：毛刺,<br>查询时间要求敏感，需要深度调优，数值体现<br>限流、熔断（timeout请求）、备份、跨区多机房容灾, 权限(opengateway)，<br>冷数据落盘（生命周期管理，日期滑动窗口），降低GC，优化merge策略，查询剪枝</p><h4 id="跨越速运"><a href="#跨越速运" class="headerlink" title="跨越速运"></a>跨越速运</h4><p>多重聚合性能问题（快递行业按月度建索引和查询聚合）<br>指标: QPS, 平均响应时间<br>bucket原理： 先分组后查询，节省内存空间<br>mysql: 先查询后分组<br>elasticsearch聚合能力边界：深度二次聚合，去重后聚合</p><h4 id="阿里云"><a href="#阿里云" class="headerlink" title="阿里云"></a>阿里云</h4><p>自动化运维（基于经验。类似watch监控）：自动诊断系统（正则删除禁用、别<br>名使用，dynamic禁用，GC日志、slow log日志，type合理性）</p><h4 id="个推"><a href="#个推" class="headerlink" title="个推"></a>个推</h4><p>elasticsearch0.9到1.5版本的升级，升级前比较多问题，节点脱离集群，jvm的<br>堆内存过高（fresh原因）</p><h4 id="滴滴"><a href="#滴滴" class="headerlink" title="滴滴"></a>滴滴</h4><p>应用场景：redis从库、 日志搜索、安全场景分析、应用核心搜索<br>3500+节点、1000+应用， 8PB+数据量，月存储成本350w+, 5w+QPS<br>数据同步（redis2es, hive2es, log2es）、数据清理（ingest节点）、<br>多版本兼容、版本升级、容量规划、DSL审核、<br>权限审计、多租户隔离（opensearch）、跨集群访问、indexTemplate 管理、租户管理、<br>DSL模板管理、用户自助接入、系统集成、学习使用成本低，自助式运维（监控体系化）<br>稳定性建设：事前（资源隔离、查询审核），事中（限流，查询熔断），事后（快速修复、止损）<br>95%命中三天的数据（优化：冷热数据），25%的字段数据从未被查询过（优化：索引重建）</p><h4 id="斗鱼（es版本1-x）"><a href="#斗鱼（es版本1-x）" class="headerlink" title="斗鱼（es版本1.x）"></a>斗鱼（es版本1.x）</h4><p>mapping创建留备用字段，防止reindex索引<br>避免wildcard查询<br>网关：权限、查询超时熔断、限流，流量监控</p><h4 id="百度-es版本2-x-优化改进"><a href="#百度-es版本2-x-优化改进" class="headerlink" title="百度(es版本2.x 优化改进)"></a>百度(es版本2.x 优化改进)</h4><p>(在线动态增加字段,修改分词器)，加版本号，后台job自动reindex<br>DistributedLog: 强一致读写，高性能、高可用、可扩展</p><h4 id="360"><a href="#360" class="headerlink" title="360"></a>360</h4><p>elasticsearch加速spacksql查询，把mysql数据弄到es上</p><h4 id="LinkedIn-做日志搜索和分析"><a href="#LinkedIn-做日志搜索和分析" class="headerlink" title="LinkedIn :做日志搜索和分析"></a>LinkedIn :做日志搜索和分析</h4><p>能用SSD就不用SATA<br>JVM heap设置不要超过32GB，shard不要超过50GB</p><h4 id="知乎"><a href="#知乎" class="headerlink" title="知乎"></a>知乎</h4><p>现状：3500+节点、3000+索引、50000+shard、5PB数据存储和搜索、峰值2000w/s写入</p><p>应用场景： 日志搜索、 站内/app核心搜索（订单、附近的车辆）、 安全监控日志搜索和聚合分析</p><p>架构： 多集群、写入加一层sink服务 &amp; kafka 做流量削峰、查询加一层gateway做限流熔断、安全<br>审计、流量监控等， 跨集群加一层低版本叫tribeNode、高版本叫跨集群（流量代理）来实现跨集群<br>搜索， admin服务提供对索引的生命周期管理、容量自动规划、索引和集群健康监控等功能。kafka<br>可以回溯数据做故障恢复，分发消息到多个集群中。</p><p>优点：支撑业务线可快速接入、统一管理与运维、可靠性高、对业务线隐藏es技术细节，做到对业务<br>无感知，可快速扩缩容、自动化部署、水平扩展快。</p><p>缺点：复杂性、风险性增加，如下瓶颈和挑战。<br>瓶颈和挑战：<br>1）稳定性挑战:<br>tribeNode会merge每个集群的ClusterState对象，对外看起来就是一个包含所有索引的节点，<br>ClusterState包含索引、分片和节点数据分布表等数据，如果在变更或者查询这些数据时，<br>tribeNode会转发这些数据到各个集群的shard中，异步等待各个shard执行成功汇总返回。<br>如果某个节点假死，如JVM堆内存飙升，则等待响应时间长，如果这样的请求很多，<br>netty的worker线程用完，则进入队列等待，阻塞影响到后面的请求操作。<br>2）统一性/规范性挑战:<br>每个集群都有自己的_cluster setting，indexTemplate . 这导致在跨集群搜索的时候难<br>以进行。解决方式是内部实现统一的lucene、es版本。<br>3）容量规划挑战:<br>在创建索引前先对容量进行规划，容量满了则需要对索引转移，后期应实现自动化容量转移和规划。</p><h4 id="阿里云elasticsearch"><a href="#阿里云elasticsearch" class="headerlink" title="阿里云elasticsearch"></a>阿里云elasticsearch</h4><p>1、支持sql查询，提高易用性、降低学习成本。<br>2、Faster bulk插件写入吞吐提升20%。<br>3、一键索引迁移。<br>4、支持异步写入。<br>5、支持高版本如7.7。<br>6、自动告警。<br>7、节点数弹性扩缩容，存储自动升降配。<br>8、支持冷热数据，冷数据走SATA盘，降低成本。<br>9、支持brotli和zstd压缩算法，具有更高的索引压缩比，大幅降低索引存储成本，写入性能下降10%，<br>压缩率提升45%。<br>11、支持限流降级插件。<br>12、支持场景化模板，帮助用户进行配置，使集群和索引配置达到最优。场景分为：持通用场景、数<br>据分析场景、数据库加速场景和搜索场景；日志增强版支持日志场景。支持在控制台上根据业务情<br>况修改所选场景，并查看、修改、应用相应的配置，从而优化集群的参数和索引情况，减少由于使<br>用错误导致的集群异常和性能问题。<br>13、在控制台日志模块查询ES访问日志，包含请求时间、客户端来源、请求内容等，可用于问题排<br>查和请求分析。<br>14、智能运维诊断结果推送，通过邮件方式，为用户推送相关实例的健康诊断报告，集群变更与数<br>据备份功能。支持每半小时的自动数据备份时间间隔，以及自定义备份周期。<br>15、Beats数据采集中心上线，提供多beats标准化接入方案。<br>16、支持用户上传自定义同义词文件，并通过分词器设置自定义分词策略。<br>17、提供Error Log、Slow Log、GC Log日志的查看及搜索功能，并且提供时间的filter能力。方<br>便用户查看了解集群的状况。</p>]]></content>
     
@@ -53,7 +75,7 @@
     
     </summary>
     
-      <category term="elasticsearch" scheme="https://ouzhrm.github.io/categories/elasticsearch/"/>
+      <category term="搜索" scheme="https://ouzhrm.github.io/categories/%E6%90%9C%E7%B4%A2/"/>
     
     
       <category term="elasticsearch" scheme="https://ouzhrm.github.io/tags/elasticsearch/"/>
@@ -432,26 +454,6 @@
     
     
       <category term="支付" scheme="https://ouzhrm.github.io/tags/%E6%94%AF%E4%BB%98/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>再议索引</title>
-    <link href="https://ouzhrm.github.io/2018/05/05/%E5%86%8D%E8%AE%AE%E7%B4%A2%E5%BC%95/"/>
-    <id>https://ouzhrm.github.io/2018/05/05/再议索引/</id>
-    <published>2018-05-05T10:23:03.000Z</published>
-    <updated>2018-05-20T08:37:00.932Z</updated>
-    
-    <content type="html"><![CDATA[<h5 id="关于索引的使用"><a href="#关于索引的使用" class="headerlink" title="关于索引的使用"></a>关于索引的使用</h5><p>1、最适合建索引的列有：where后边的、联接（join）条件相关的列、<br>order by相关的列、group by 相关的列。<br>2、数据量区分度要大些，如男女数据量各占50%的就不需要建索引。<br><a id="more"></a><br>3、索引的长度(体积)尽可能的小。<br>4、复合索引要充分满足最左前缀。如：建的复合索引为</p><p>（state、city、zip），则能命中索引的条件有：<br>state、city、zip<br>state、city<br>state<br>5、索引建的数量要适当，因为索引多的话，查询快了，但是更新慢。<br>6、InnoDB，MYISAM总是使用B+树索引。MEMORY存储引擎默认使用Hash索引.<br>Hash索引在使用“=”，“&lt;=&gt;”比较快，范围查找比较慢，如：id&lt;30或者weight<br> between 100 and 150.而“B树”范围查找比较快</p><h5 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h5><p>1.普通索引 index<br>创建：CREATE INDEX index_name ON table(column(length))。<br>修改：ALTER TABLE table_name ADD INDEX index_name ON (column(length))<br>创建表的时候同时创建索引：<br>CREATE TABLE <code>table</code> (<br>    <code>id</code> int(11) NOT NULL AUTO_INCREMENT ,<br>    <code>title</code> char(255) CHARACTER NOT NULL ,<br>    <code>content</code> text CHARACTER NULL ,<br>    <code>time</code> int(10) NULL DEFAULT NULL ,<br>    PRIMARY KEY (<code>id</code>),<br>    INDEX index_name (title(length))<br>)<br>删除：DROP INDEX index_name ON table。</p><p>2.唯一索引 unique index<br>索引列的值必须唯一，但允许有空值。如果是组合索引，则列值的组合必须唯一。<br>创建：CREATE UNIQUE INDEX indexName ON table(column(length))<br>修改：ALTER TABLE table_name ADD UNIQUE indexName ON (column(length))<br>创建表的时候直接指定：<br>CREATE TABLE <code>table</code> (<br>    <code>id</code> int(11) NOT NULL AUTO_INCREMENT ,<br>    <code>title</code> char(255) CHARACTER NOT NULL ,<br>    <code>content</code> text CHARACTER NULL ,<br>    <code>time</code> int(10) NULL DEFAULT NULL ,<br>    UNIQUE indexName (title(length))<br>);</p><p>3.主键索引 key index<br>CREATE TABLE <code>table</code> (<br>    <code>id</code> int(11) NOT NULL AUTO_INCREMENT ,<br>    <code>title</code> char(255) NOT NULL ,<br>    PRIMARY KEY (<code>id</code>)<br>);</p><p>4.组合索引<br>ALTER TABLE <code>table</code> ADD INDEX name_city_age (name,city,age); </p><p>5.全文索引 fulltext index<br>主要用来查找文本中的关键字，而不是直接与索引中的值相比较。<br>先建表后加全文索引比建表的同时创建全文索引，写入的速度要快很多。<br>CREATE FULLTEXT INDEX index_content ON article(content)</p><p>CREATE TABLE <code>table</code> (<br>    <code>id</code> int(11) NOT NULL AUTO_INCREMENT ,<br>    <code>title</code> char(255) CHARACTER NOT NULL ,<br>    <code>content</code> text CHARACTER NULL ,<br>    <code>time</code> int(10) NULL DEFAULT NULL ,<br>    PRIMARY KEY (<code>id</code>),<br>    FULLTEXT (content)<br>);</p><p>ALTER TABLE article ADD FULLTEXT index_content(content)。</p><h4 id="慢查询"><a href="#慢查询" class="headerlink" title="慢查询"></a>慢查询</h4><p>开启慢查询日志，可以让MySQL记录下查询超过指定时间的语句，<br>通过定位分析性能的瓶颈，才能更好的优化数据库系统的性能。</p><p>//查询mysql的查询相关的启动配置参数<br>show variables like ‘query%’;<br>set global slow_query_log=’ON’; //开启慢查询日志<br>//慢查询日志存放位置<br>set global slow_query_log_file=’/usr/local/mysql/data/slow.log’;<br>set global long_query_time=1;//查询超过1秒就记录</p><p>select sleep(4);//执行一条慢查询SQL语句</p><h4 id="MySQL索引方法"><a href="#MySQL索引方法" class="headerlink" title="MySQL索引方法"></a>MySQL索引方法</h4><p>MySQL目前主要有以下几种索引方法：B-Tree，Hash，R-Tree。</p><p>B-Tree索引<br>B-Tree是最常见的索引类型，所有值（被索引的列）都是<strong>排过序</strong>的，<br>每个叶节点到根节点距离相等。所以B-Tree适合用来查找某一<strong>范围</strong><br>内的数据，而且可以直接<strong>支持数据排序</strong>（ORDER BY）<br>B-Tree在MyISAM里的形式和Innodb稍有不同：<br>MyISAM表数据文件和索引文件是分离的，<strong>索引文件仅保存数据记录的磁盘地址</strong><br>InnoDB表数据文件本身就是主索引，叶节点data域保存了完整的数据记录</p><p>Hash索引<br>1.<strong>仅支持”=”,”IN”和”&lt;=&gt;”精确查询，不能使用范围查询</strong>：<br>2.<strong>不支持排序</strong>：<br>3.在任何时候都不能避免表扫描。<br>通过访问表中的实际数据进行相应的比较，并得到相应的结果。<br>4.检索效率<strong>高</strong>，索引的检索可以一次定位，Hash索引的查询效率要远高于B-Tree索引。<br>5.只有Memory引擎支持显式的Hash索引，它也支持B-Tree索引。</p><p>R-Tree索引<br>略</p><p>———–<a href="http://www.cnblogs.com/luyucheng/category/920876.html-------------" target="_blank" rel="noopener">http://www.cnblogs.com/luyucheng/category/920876.html-------------</a><br>——-未完，待续——-</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h5 id=&quot;关于索引的使用&quot;&gt;&lt;a href=&quot;#关于索引的使用&quot; class=&quot;headerlink&quot; title=&quot;关于索引的使用&quot;&gt;&lt;/a&gt;关于索引的使用&lt;/h5&gt;&lt;p&gt;1、最适合建索引的列有：where后边的、联接（join）条件相关的列、&lt;br&gt;order by相关的列、group by 相关的列。&lt;br&gt;2、数据量区分度要大些，如男女数据量各占50%的就不需要建索引。&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="mysql" scheme="https://ouzhrm.github.io/tags/mysql/"/>
     
   </entry>
   

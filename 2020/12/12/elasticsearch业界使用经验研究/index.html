@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="Kevin Chow&#39;s blog">
 <meta property="og:description" content="去哪儿docker+k8s部署elasticsearch, 设定慢日志记录，节点划分（data, master, hot, warm这些），分片数副本数设定， opensearch系统的自助配置，监控和报警，监控数据汇总审计日志，错误日志，访问日志。PB级数据量写入和查询使用场景：附近的人（GPS）, 报表，监控统计，物/车联网传感器数据，日志实时分析，站内搜索（订单，产品，文档），定期force">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2021-04-11T04:11:17.043Z">
+<meta property="og:updated_time" content="2021-04-11T08:44:06.604Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="业界使用elasticsearch经验研究">
 <meta name="twitter:description" content="去哪儿docker+k8s部署elasticsearch, 设定慢日志记录，节点划分（data, master, hot, warm这些），分片数副本数设定， opensearch系统的自助配置，监控和报警，监控数据汇总审计日志，错误日志，访问日志。PB级数据量写入和查询使用场景：附近的人（GPS）, 报表，监控统计，物/车联网传感器数据，日志实时分析，站内搜索（订单，产品，文档），定期force">
@@ -242,7 +242,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/elasticsearch//" class="article-tag-list-link color4">elasticsearch</a>
+        			<a href="/categories/搜索//" class="article-tag-list-link color3">搜索</a>
         		</li>
       		
 		</ul>
@@ -315,7 +315,7 @@
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          基础结构部门elasticsearch使用经验研究
+          基础架构部门elasticsearch使用经验研究
         
       </div>
     </a>
@@ -440,7 +440,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">稳定性</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">DDD</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">锁</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -448,23 +456,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">稳定性</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">mybatis</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">mysql</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">锁</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -481,6 +477,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">分布式</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">数据库</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -504,6 +504,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">优化</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">秒杀</a>
               </li>
              
@@ -520,15 +524,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">思考</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">spring</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">需求分析</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">思考</a>
               </li>
              
               <li class="article-tag-list-item">
